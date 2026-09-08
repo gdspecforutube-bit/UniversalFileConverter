@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fast, free and private client-side file converter for PDF to Word, PNG to JPG, image, document and audio conversions directly in your browser.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Universal File Converter – Fast, Free &amp; Private Online Converter">
+  <meta property="og:description" content="Convert PDF to Word, PNG to JPG and more with fast, private browser-based processing.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.com/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Universal File Converter – Fast, Free &amp; Private Online Converter">
+  <meta name="twitter:description" content="Private client-side PDF, image, document and audio conversion with no uploads.">
+  <link rel="canonical" href="https://yourdomain.com/">
+  <title>Universal File Converter – Fast, Free &amp; Private Online Converter</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Universal File Converter","url":"https://yourdomain.com/","description":"Fast, free and private client-side file converter for PDF, image, document and audio formats.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script src="https://accounts.google.com/gsi/client"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script id="dropboxjs" data-app-key="YOUR_DROPBOX_APP_KEY" src="https://www.dropbox.com/static/api/2/dropins.js"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="site-header">
+      <a class="nav-logo" href="#" aria-label="Universal File Converter">
+        <span class="brand-mark" aria-hidden="true">⇄</span>
+        <strong>Universal File Converter</strong>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <div class="tools-menu">
+          <button id="tools-nav" type="button" aria-expanded="false" aria-controls="tools-panel">Tools<svg class="tools-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+          <section id="tools-panel" class="tools-panel" hidden aria-labelledby="tools-title">
+            <h2 id="tools-title">Conversion tools</h2>
+            <a href="#image" data-route="image" data-tool="image"><strong>Image Converter</strong><small>JPG, PNG, WEBP, HEIC, AVIF, SVG</small></a>
+            <a href="#document" data-route="document" data-tool="document"><strong>Document Converter</strong><small>PDF, DOCX, XLSX, PPTX, TXT</small></a>
+            <a href="#audio" data-route="audio" data-tool="audio"><strong>Audio Converter</strong><small>MP3, WAV, AAC, FLAC, OGG</small></a>
+            <a href="#video" data-route="video" data-tool="video"><strong>Video Converter</strong><small>MP4, WEBM, MOV, AVI, MKV</small></a>
+            <a href="#compress" data-route="compress" data-tool="compress"><strong>Compress Files</strong><small>PDF, PNG, JPG optimization</small></a>
+            <a href="#pdf" data-route="pdf" data-tool="pdf"><strong>Merge PDF</strong><small>Combine documents locally</small></a>
+            <a href="#archive" data-route="archive" data-tool="archive"><strong>Archive Converter</strong><small>ZIP, RAR, 7Z, TAR.GZ</small></a>
+            <a href="#font" data-route="font" data-tool="font"><strong>Font Converter</strong><small>TTF, OTF, WOFF, WOFF2</small></a>
+          </section>
+        </div>
+        <button id="compress-nav" type="button">Compress</button>
+        <button id="convert-nav" type="button">Convert</button>
+        <button id="api-nav" type="button">API</button>
+      </nav>
+    </header>
+
+    <section class="converter-card">
+      <section id="step-upload" class="step-view active" aria-labelledby="upload-title">
+        <h2 id="upload-title">Upload your file</h2>
+        <p class="step-description">Drop any supported file below, or browse your device to get started.</p>
+        <div id="drop-zone" class="drop-zone" tabindex="0">
+          <div class="upload-icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></div><h3>Drop your file here</h3><p>or click to browse any file</p>
+          <button id="browse-btn" class="secondary-btn" type="button">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.webm" hidden>
+        </div>
+        <div class="cloud-import-group">
+          <button id="drive-btn" type="button" aria-label="Import a file from Google Drive">
+            <svg class="cloud-brand-icon drive-icon" viewBox="0 0 18 18" aria-hidden="true"><path fill="#1a73e8" d="M6.1 2.2h3.9l5.8 9.9h-3.9z"/><path fill="#34a853" d="M6.1 2.2 2.2 8.9l1.9 3.2 3.9-6.7z"/><path fill="#fbbc04" d="m4.1 12.1-1.9 3.2h7.7l1.9-3.2z"/></svg>
+            <span>Import from Google Drive</span>
+          </button>
+          <button id="dropbox-btn" type="button" aria-label="Import a file from Dropbox">
+            <svg class="cloud-brand-icon dropbox-icon" viewBox="0 0 18 18" aria-hidden="true"><path fill="#0061ff" d="m2 5.1 4-2.5 3 2.5-3 2.5zm7 0 3-2.5 4 2.5-4 2.5zM2 9.4l4-2.5 3 2.5-3 2.5zm7 0 3-2.5 4 2.5-4 2.5zm-3 4.2 3-1.8 3 1.8-3 1.9z"/></svg>
+            <span>Import from Dropbox</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="step-convert" class="step-view" aria-labelledby="convert-title" hidden>
+        <h2 id="convert-title">Choose a format</h2><p class="step-description">Select the output format for your uploaded file.</p>
+        <div class="file-card"><div class="file-icon">FILE</div><div class="file-details"><strong id="file-name"></strong><small id="file-meta"></small></div><button id="change-file" class="change-btn" type="button">Remove / Change</button></div>
+        <div class="format-label">Convert to
+          <div id="format-select" class="custom-dropdown">
+            <button id="format-trigger" class="custom-dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+            <div id="format-menu" class="custom-dropdown-menu" role="listbox" tabindex="-1"></div>
+          </div>
+        </div>
+        <details class="advanced-settings"><summary>Advanced Settings</summary><div class="settings-grid">
+          <label>Image quality <output id="quality-value">92%</output><input id="quality-range" type="range" min="10" max="100" value="92"></label>
+          <label>Resize width<input id="resize-width" type="number" min="1" placeholder="Original"></label>
+          <label>Resize height<input id="resize-height" type="number" min="1" placeholder="Original"></label>
+          <label>PDF pages<select id="page-range"><option value="all">All Pages</option><option value="first">Page 1 only</option></select></label>
+        </div></details>
+        <button id="convert-btn" class="primary-btn" type="button">Convert File Now</button>
+      </section>
+
+      <section id="step-result" class="step-view" aria-labelledby="result-title" hidden>
+        <h2 id="result-title">Converting your file...</h2><p id="progress-message" class="step-description">Preparing your conversion...</p>
+        <div class="progress-box"><div class="progress-label"><span>Conversion progress</span><strong id="progress-value">0%</strong></div><div class="progress-track"><span id="progress-bar"></span></div><span id="conversion-spinner" class="conversion-spinner" aria-label="Conversion in progress" hidden></span></div>
+        <div id="success-card" class="success-card" hidden><span class="success-icon">✓</span><div><strong id="output-name"></strong><small>Conversion complete and ready to download.</small></div></div>
+        <div class="result-actions"><a id="download-btn" class="download-btn" href="#" download hidden>Download Converted File</a><button id="another-btn" class="secondary-btn" type="button">Convert Another File</button></div>
+      </section>
+      <section class="seo-content" aria-labelledby="seo-title">
+        <h2 id="seo-title">Fast, private online file conversion</h2>
+        <p>Convert images, PDFs, documents, and audio files quickly with our free browser-based converter. Processing happens 100% client-side, so your files stay on your device and are never uploaded to a server.</p>
+        <p>Transform JPG, PNG, WEBP, HEIC, PDF, DOCX, TXT, MP3, WAV, AAC, FLAC, OGG, and M4A files without installing software or waiting for a remote upload.</p>
+      </section>
+      <aside class="adsense-slot" aria-label="Advertisement">
+        <span>Advertisement</span>
+        <!-- After approval, add this once in <head> and replace the IDs below:
+        <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+      </aside>
+      <section class="faq-section" aria-labelledby="faq-title">
+        <h2 id="faq-title">Frequently asked questions</h2>
+        <details><summary>Are my files safe?</summary><p>Yes. Conversion runs locally in your browser. Files are not uploaded or stored on our servers.</p></details>
+        <details><summary>Is there a file size limit?</summary><p>There is no service-side upload limit. Your practical limit depends on available device memory and browser capabilities.</p></details>
+        <details><summary>Do I need to install software?</summary><p>No. The converter works in a modern browser without downloads or plugins.</p></details>
+      </section>
+      <aside class="adsense-slot adsense-rail" aria-label="Advertisement">
+        <span>Advertisement</span>
+        <!-- Optional responsive rail placement:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+      </aside>
+    </section>
+    <section id="developer-docs" class="developer-docs" aria-labelledby="developer-docs-title">
+      <h2 id="developer-docs-title">Developer docs</h2>
+      <p>Use the same client-side conversion flow from your own page. Files stay in the browser and are never uploaded.</p>
+      <pre><code>const file = document.querySelector("#file-input").files[0];
+const bytes = await file.arrayBuffer();
+// Pass bytes to your browser-side JS or WebAssembly converter.</code></pre>
+    </section>
+    <footer class="site-footer"><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></footer>
+  </main>
+  <!-- Legacy API and cloud dialogs removed; integrations use inline docs and official pickers. -->
+  <!--
+  <dialog id="api-modal" class="api-modal"><button id="close-api" class="panel-close" type="button" aria-label="Close API dialog">×</button><h2>Developer API</h2><p>Use the browser converter UI or connect your own backend endpoint.</p><pre><code>POST /v1/convert
+Authorization: Bearer YOUR_TOKEN
+Content-Type: multipart/form-data</code></pre><p class="muted">API tokens and server processing are not enabled in this static client.</p></dialog>
+  <dialog id="cloud-modal" class="api-modal"><button id="close-cloud" class="panel-close" type="button" aria-label="Close cloud import dialog">×</button><h2 id="cloud-title">Cloud import</h2><p id="cloud-message"></p><ol><li>Download the file from your cloud provider.</li><li>Return here and choose <strong>Choose files</strong>.</li><li>Your file stays in this browser during conversion.</li></ol><button id="close-cloud-action" class="primary-btn" type="button">Got it</button></dialog>
+  </dialog>
+  -->
+  <dialog id="cloud-config-modal" class="cloud-config-modal">
+    <div class="cloud-config-content">
+      <button id="close-cloud-config" class="panel-close" type="button" aria-label="Close cloud configuration message">×</button>
+      <h2 id="cloud-config-title">Cloud import setup</h2>
+      <p id="cloud-config-message"></p>
+      <p class="cloud-config-notice">Cloud integrations require your own provider API key and OAuth client ID. No file is uploaded by this converter unless you explicitly choose an enabled provider integration.</p>
+      <div class="cloud-credentials">
+        <label for="google-client-id">Google Drive Client ID <input id="google-client-id" type="text" autocomplete="off" placeholder="Optional OAuth client ID"></label>
+        <label for="dropbox-app-key">Dropbox App Key <input id="dropbox-app-key" type="text" autocomplete="off" placeholder="Optional Dropbox app key"></label>
+      </div>
+      <div class="cloud-config-actions">
+        <button id="cloud-config-save" class="secondary-btn" type="button">Save credentials</button>
+        <button id="cloud-config-local" class="primary-btn" type="button">Choose Local File Instead</button>
+        <button id="cloud-config-dismiss" class="secondary-btn" type="button">Not now</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="impressum-modal" class="policy-modal"><div class="policy-modal-content"><button id="close-impressum" class="panel-close" type="button" aria-label="Close legal notice">×</button><h2 id="impressum-title">Legal Notice / Impressum</h2><h3>Responsible for content:</h3><p id="impressum-responsible">Zonixx</p><h3>Contact:</h3><p id="impressum-contact">Email: gdspecforutube@gmail.com</p><h3>Note:</h3><p id="impressum-note">This is currently a purely private, free, and non-commercial open-source project with no advertising intent. This information will be updated later.</p></div></dialog>
+  <dialog id="privacy-modal" class="policy-modal"><div class="policy-modal-content"><button id="close-privacy" class="panel-close" type="button" aria-label="Close privacy policy">×</button><h2>Privacy Policy</h2><h3>1. Browser-only file processing</h3><p>Files selected for conversion are processed 100% locally in your browser using JavaScript and, where applicable, WebAssembly. File contents are not uploaded to, stored on, or transmitted through our servers.</p><h3>2. Local storage and consent</h3><p>We use your browser's local storage only to remember cookie-consent and preference settings. You can clear this data at any time through your browser settings.</p><h3>3. Cloud providers and third-party advertising</h3><p>Google Drive and Dropbox imports are optional integrations. They require your own API credentials or OAuth authorization and are subject to the provider's privacy policies. If AdSense is enabled in the future, Google may use cookies or similar technologies for measurement and personalized advertising according to your consent and Google's policies.</p><h3>4. Your rights</h3><p>For questions about this policy or your data-protection rights under the GDPR, contact the service provider listed in the Impressum.</p></div></dialog>
+  <dialog id="terms-modal" class="policy-modal"><div class="policy-modal-content"><button id="close-terms" class="panel-close" type="button" aria-label="Close terms of service">×</button><h2>Terms of Service</h2><p>This converter is provided for personal use as-is. You are responsible for ensuring you have the rights to process the files you select.</p><p>All processing happens locally in your browser. No files are uploaded to or stored on our servers.</p></div></dialog>
+  <section id="cookie-consent" class="cookie-consent" role="dialog" aria-label="Cookie consent" hidden><div class="cookie-copy"><strong>Privacy settings</strong><p>We use local storage only to remember your consent. If enabled later, AdSense may use cookies to personalize advertising. Your files are never stored.</p></div><div class="cookie-actions"><button id="accept-essential-cookies" class="cookie-secondary" type="button">Necessary Only</button><button id="cookie-settings-btn" class="cookie-ghost" type="button" aria-expanded="false" aria-controls="cookie-preferences-panel">Preferences</button><button id="accept-all-cookies" class="primary-btn" type="button">Accept All</button></div><div id="cookie-preferences-panel" class="cookie-preferences-panel" hidden><label><span>Essential</span><input type="checkbox" checked disabled></label><label><span>Analytics</span><input id="analytics-consent" type="checkbox"></label><label><span>Marketing</span><input id="marketing-consent" type="checkbox"></label><button id="save-cookie-preferences" class="cookie-secondary" type="button">Save Preferences</button></div></section>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
