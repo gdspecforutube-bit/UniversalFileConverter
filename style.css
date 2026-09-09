@@ -55,6 +55,14 @@ dialog .primary-btn:hover{background:#1d4ed8}
 .feature-card{padding:16px;border:1px solid rgba(59,130,246,.2);border-radius:10px;background:#161b26;box-shadow:0 8px 24px rgba(0,0,0,.14)}
 .feature-card h3{margin:0;color:#f8fafc;font-size:.9rem}
 .feature-card p{margin:7px 0 0;color:#9ca3af;font-size:.8rem;line-height:1.6}
+.landing-page{width:min(760px,calc(100% - 32px));min-height:100vh;margin:0 auto;padding:32px 0 64px}
+.landing-brand{display:inline-block;margin-bottom:32px;color:#f8fafc;font-size:1rem;font-weight:700;text-decoration:none}
+.landing-brand:hover{color:#60a5fa}
+.landing-card{padding:40px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:#161b26;box-shadow:0 20px 60px rgba(0,0,0,.24)}
+.landing-card h1{margin:0;color:#fff;font-size:clamp(2rem,5vw,3.1rem);letter-spacing:-.04em}
+.landing-card h2{margin:34px 0 8px;color:#fff;font-size:1.25rem}
+.landing-card p:not(.eyebrow){max-width:620px;color:#cbd5e1;font-size:1rem;line-height:1.75}
+.landing-cta{display:inline-flex;width:auto;margin-top:16px;padding:12px 18px;text-decoration:none}
 .adsense-slot{display:flex;max-width:680px;height:90px;align-items:center;justify-content:center;margin:24px auto;color:#64748b;border:1px dashed rgba(255,255,255,.12);border-radius:10px;background:#0f141e;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}.adsense-rail{height:120px}
 .drop-zone.dragging{transform:scale(1.015);box-shadow:0 0 28px rgba(59,130,246,.28)}
 .conversion-spinner{display:block;width:20px;height:20px;margin:14px auto 0;border:2px solid rgba(255,255,255,.18);border-top-color:#3b82f6;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
@@ -126,6 +134,7 @@ body{min-height:100vh;overflow-x:hidden;background:var(--page);color:var(--ink);
 .site-footer a{color:#94a3b8;text-decoration:none;transition:color .2s}
 .site-footer a:hover{color:var(--blue)}
 @media(max-width:520px){.page{padding:0 16px 40px}.site-header{margin:0 -16px 32px;padding:0 16px}.nav-logo{gap:9px;font-size:1rem}.nav-logo .brand-mark{width:34px;height:34px}.header-nav{gap:12px}.header-nav a{font-size:.78rem}.features-grid,.conversion-guide-grid{grid-template-columns:1fr}.features-section,.conversion-guides,.faq-section{padding:18px}}
+@media(max-width:520px){.landing-page{width:calc(100% - 24px);padding-top:24px}.landing-card{padding:24px}.landing-card h1{font-size:2rem}.landing-card p:not(.eyebrow){font-size:.9rem}}
 @media(max-width:700px){
   .site-header{height:auto;min-height:64px;flex-wrap:wrap;gap:10px;padding-top:10px;padding-bottom:10px}
   .nav-logo{min-width:0}

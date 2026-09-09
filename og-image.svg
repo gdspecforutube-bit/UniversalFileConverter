@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Universal File Converter</title>
+  <desc id="desc">Fast, free and private browser-based file conversion</desc>
+  <rect width="1200" height="630" fill="#0b0f17"/>
+  <rect x="70" y="70" width="1060" height="490" rx="28" fill="#161b26" stroke="#3b82f6" stroke-opacity=".35" stroke-width="2"/>
+  <text x="130" y="270" fill="#f8fafc" font-family="Arial, sans-serif" font-size="62" font-weight="700">Universal File Converter</text>
+  <text x="134" y="350" fill="#60a5fa" font-family="Arial, sans-serif" font-size="34">Fast, free &amp; private browser conversion</text>
+</svg>
