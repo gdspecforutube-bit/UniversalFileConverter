@@ -42,7 +42,13 @@ dialog .primary-btn:hover{background:#1d4ed8}
 .developer-docs pre{overflow:auto;margin:0;padding:16px;border-radius:8px;color:#d1d5db;background:#0b0f17;font-size:.75rem}
 .seo-content,.faq-section{max-width:680px;margin:32px auto 0;padding:24px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#121824}
 .seo-content h2,.faq-section h2{margin:0 0 10px;color:#fff;font-size:1.1rem}.seo-content p,.faq-section p{color:#9ca3af;font-size:.85rem;line-height:1.7}
-.faq-section details{border-top:1px solid rgba(255,255,255,.08);padding:14px 0}.faq-section summary{cursor:pointer;color:#e5e7eb;font-weight:600}.faq-section details p{margin:8px 0 0}
+.conversion-guides{max-width:680px;margin:32px auto 0;padding:24px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#121824}
+.conversion-guides h2{margin:0 0 16px;color:#fff;font-size:1.1rem}
+.conversion-guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.conversion-guide{padding:16px;border:1px solid rgba(59,130,246,.2);border-radius:10px;background:#161b26}
+.conversion-guide h3{margin:0;color:#f8fafc;font-size:.9rem}
+.conversion-guide p{margin:7px 0 0;color:#9ca3af;font-size:.8rem;line-height:1.6}
+.faq-section details{border-top:1px solid rgba(255,255,255,.12);padding:14px 0}.faq-section summary{cursor:pointer;padding:2px 0;color:#fff;font-weight:700;line-height:1.5}.faq-section summary:focus-visible{outline:2px solid #60a5fa;outline-offset:4px;border-radius:3px}.faq-section details p{margin:8px 0 0;color:#d1d5db}
 .features-section{max-width:680px;margin:32px auto 0;padding:24px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#121824}
 .features-section h2{margin:0 0 16px;color:#fff;font-size:1.1rem}
 .features-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -119,7 +125,7 @@ body{min-height:100vh;overflow-x:hidden;background:var(--page);color:var(--ink);
 .site-footer{display:flex;justify-content:center;gap:12px;margin:28px auto 0;color:#94a3b8;font-size:.78rem}
 .site-footer a{color:#94a3b8;text-decoration:none;transition:color .2s}
 .site-footer a:hover{color:var(--blue)}
-@media(max-width:520px){.page{padding:0 16px 40px}.site-header{margin:0 -16px 32px;padding:0 16px}.nav-logo{gap:9px;font-size:1rem}.nav-logo .brand-mark{width:34px;height:34px}.header-nav{gap:12px}.header-nav a{font-size:.78rem}.features-grid{grid-template-columns:1fr}.features-section,.faq-section{padding:18px}}
+@media(max-width:520px){.page{padding:0 16px 40px}.site-header{margin:0 -16px 32px;padding:0 16px}.nav-logo{gap:9px;font-size:1rem}.nav-logo .brand-mark{width:34px;height:34px}.header-nav{gap:12px}.header-nav a{font-size:.78rem}.features-grid,.conversion-guide-grid{grid-template-columns:1fr}.features-section,.conversion-guides,.faq-section{padding:18px}}
 @media(max-width:700px){
   .site-header{height:auto;min-height:64px;flex-wrap:wrap;gap:10px;padding-top:10px;padding-bottom:10px}
   .nav-logo{min-width:0}

@@ -16,7 +16,32 @@
   <link rel="canonical" href="https://universal-file-converter-app.vercel.app/">
   <title>Universal File Converter – Fast, Free &amp; Private Online Converter</title>
   <link rel="stylesheet" href="style.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Universal File Converter","url":"https://universal-file-converter-app.vercel.app/","description":"Fast, free and private client-side file converter for PDF, image, document and audio formats.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebApplication",
+        "@id":"https://universal-file-converter-app.vercel.app/#application",
+        "name":"Universal File Converter",
+        "url":"https://universal-file-converter-app.vercel.app/",
+        "description":"Fast, free and private client-side conversion for PNG to JPG, PDF to Word, MP4 to MP3, images, documents, audio and more.",
+        "applicationCategory":"UtilitiesApplication",
+        "operatingSystem":"Any",
+        "browserRequirements":"Requires a modern browser with JavaScript enabled.",
+        "featureList":["PNG to JPG conversion","PDF to Word conversion","MP4 to MP3 conversion","100% browser-based processing","No registration required","Free and unlimited conversions"],
+        "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+      },
+      {
+        "@type":"FAQPage",
+        "@id":"https://universal-file-converter-app.vercel.app/#faq",
+        "mainEntity":[
+          {"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Conversion runs locally in your browser, and your files are never uploaded or stored on our servers."}},
+          {"@type":"Question","name":"Which file formats are supported?","acceptedAnswer":{"@type":"Answer","text":"Supported formats include JPG, PNG, WEBP, HEIC, AVIF, SVG, PDF, DOCX, TXT, MP3, WAV, AAC, FLAC, OGG, M4A, MP4 and WEBM."}},
+          {"@type":"Question","name":"Is there a limit on file size?","acceptedAnswer":{"@type":"Answer","text":"There is no service-side upload limit. Your practical limit depends on available device memory and browser capabilities."}}
+        ]
+      }
+    ]
+  }</script>
   <script src="https://accounts.google.com/gsi/client"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script id="dropboxjs" data-app-key="YOUR_DROPBOX_APP_KEY" src="https://www.dropbox.com/static/api/2/dropins.js"></script>
@@ -103,6 +128,14 @@
         <p>Convert images, PDFs, documents, and audio files quickly with our free browser-based converter. Processing happens 100% client-side, so your files stay on your device and are never uploaded to a server.</p>
         <p>Transform JPG, PNG, WEBP, HEIC, PDF, DOCX, TXT, MP3, WAV, AAC, FLAC, OGG, and M4A files without installing software or waiting for a remote upload.</p>
       </section>
+      <section class="conversion-guides" aria-labelledby="conversion-guides-title">
+        <h2 id="conversion-guides-title">Popular file conversion tools</h2>
+        <div class="conversion-guide-grid">
+          <article class="conversion-guide"><h3>PNG to JPG Converter</h3><p>Convert PNG images to JPG files online for smaller, widely compatible images. Processing is fast, free, and performed locally in your browser.</p></article>
+          <article class="conversion-guide"><h3>PDF to Word Converter</h3><p>Turn PDF documents into editable Word files without registration. Your documents stay on your device during browser-based conversion.</p></article>
+          <article class="conversion-guide"><h3>MP4 to MP3 Converter</h3><p>Extract audio from MP4 video files and create MP3 audio for compatible playback. Choose a local file and convert without uploading it.</p></article>
+        </div>
+      </section>
       <aside class="adsense-slot" aria-label="Advertisement">
         <span>Advertisement</span>
         <!-- After approval, add this once in <head> and replace the IDs below:
@@ -134,16 +167,16 @@
     <section class="features-section" aria-labelledby="features-title">
       <h2 id="features-title">Features &amp; Benefits</h2>
       <div class="features-grid">
-        <article class="feature-card"><h3>100% Free &amp; Unlimited</h3><p>Convert as many files as you need without subscriptions or usage fees.</p></article>
-        <article class="feature-card"><h3>Browser-Based Security</h3><p>Files never leave your device because processing happens locally in your browser.</p></article>
+        <article class="feature-card"><h3>100% Free</h3><p>Convert files without subscriptions, registration, or hidden usage fees.</p></article>
+        <article class="feature-card"><h3>Privacy First - Browser-Based Conversion</h3><p>Files never leave your device because processing happens locally in your browser.</p></article>
         <article class="feature-card"><h3>Lightning Fast</h3><p>Get instant conversion without waiting for uploads or remote processing.</p></article>
-        <article class="feature-card"><h3>No Registration Required</h3><p>Start converting immediately without creating an account or sharing personal details.</p></article>
+        <article class="feature-card"><h3>No File Size Limits</h3><p>There is no service-side upload limit; your device controls the practical limit.</p></article>
       </div>
     </section>
     <section class="faq-section" aria-labelledby="faq-title">
       <h2 id="faq-title">Frequently asked questions</h2>
       <details><summary>Is my data safe?</summary><p>Yes. Conversion runs locally in your browser, and your files are never uploaded or stored on our servers.</p></details>
-      <details><summary>Which file formats are supported?</summary><p>Supported formats include JPG, PNG, WEBP, HEIC, AVIF, SVG, PDF, DOCX, TXT, MP3, WAV, AAC, FLAC, OGG, and M4A.</p></details>
+      <details><summary>Which file formats are supported?</summary><p>Supported formats include JPG, PNG, WEBP, HEIC, AVIF, SVG, PDF, DOCX, TXT, MP3, WAV, AAC, FLAC, OGG, M4A, MP4 and WEBM.</p></details>
       <details><summary>Is there a limit on file size?</summary><p>There is no service-side upload limit. Your practical limit depends on available device memory and browser capabilities.</p></details>
     </section>
     <section id="developer-docs" class="developer-docs" aria-labelledby="developer-docs-title">
