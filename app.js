@@ -58,7 +58,7 @@
   const updateRouteMetadata = () => {
     const hasPair = routeFrom && routeTo;
     const pairLabel = hasPair ? `${formatName(routeFrom)} to ${formatName(routeTo)}` : "";
-    const title = hasPair ? `Convert ${pairLabel} Online (Free & Private) — Convertivo` : "Convertivo — Fast, Free & Private Online File Converter";
+    const title = hasPair ? `Convert ${pairLabel} Online — Convertivo` : "Convertivo — Fast, Free & Private Online File Converter";
     const description = hasPair ? `Convert ${formatName(routeFrom)} files to ${formatName(routeTo)} instantly in your browser with Convertivo. 100% private, client-side conversion. No uploads required.` : "Convertivo is a fast, free and private online file converter for images, documents and audio directly in your browser.";
     document.title = title;
     $('meta[name="description"]').setAttribute("content", description);
@@ -80,7 +80,6 @@
     const badge = $("#format-pair-badge");
     badge.hidden = !hasPair;
     badge.textContent = hasPair ? `${formatName(routeFrom)} ➜ ${formatName(routeTo)}` : "";
-    $("#upload-title").textContent = hasPair ? `Convert ${pairLabel} Online` : "Convertivo";
   };
   const applyUrlRoute = () => {
     const params = new URLSearchParams(location.search);
@@ -159,6 +158,7 @@
         option.role = "option";
         option.dataset.category = category;
         option.dataset.value = value;
+        option.setAttribute("aria-selected", String(value === preferredTarget));
         option.textContent = value === "jpg" ? "JPEG" : text.replace(/\s*\([^)]*\)/, "");
         option.addEventListener("click", () => {
           setCustomFormat(value, text);
@@ -169,6 +169,11 @@
       });
       if (index === 0) categoryButton.click();
     });
+    const preferredOption = $(".target-format-option[aria-selected='true']");
+    if (preferredOption) {
+      const preferredCategory = $(`.target-format-category[data-category="${preferredOption.dataset.category}"]`);
+      preferredCategory?.click();
+    }
     $("#target-format-search").value = "";
     $("#target-format-source").textContent = `Detected ${formatName(normalizedExt(file.name))} file: ${file.name}`;
   }
@@ -201,8 +206,6 @@
   function reset() { file = null; files = []; outputBlob = null; outputName = ""; input.value = ""; $("#success-card").hidden = true; $("#download-btn").hidden = true; $("#download-btn").removeAttribute("href"); $("#progress-bar").style.width = "0%"; $("#progress-value").textContent = "0%"; $("#result-title").textContent = "Converting your file..."; setProgress(0, "Preparing your conversion..."); showStep("upload"); }
   function setMode(mode) {
     compressMode = mode === "compress";
-    $("#upload-title").textContent = compressMode ? "Compress your file" : "Upload your file";
-    $(".step-description").textContent = compressMode ? "Reduce image file size directly in your browser." : "Drop any supported file below, or browse your device to get started.";
   }
   async function sourceBlob() {
     if (ext(file.name) === "svg") {
@@ -344,8 +347,6 @@
     preferredTarget = route === "pdf" || route === "document" ? "pdf" : route === "audio" ? "wav" : route === "image" ? "png" : "";
     setMode(route === "compress" ? "compress" : "convert");
     reset();
-    $("#upload-title").textContent = preset.title;
-    document.querySelector("#step-upload .step-description").textContent = preset.subtitle;
     input.accept = preset.accept;
     renderFormats(Object.entries(preset.categories));
     document.querySelector(".converter-card").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -442,7 +443,6 @@
     event.preventDefault();
     setMode("convert");
     reset();
-    $("#upload-title").textContent = title;
     input.accept = accept;
     $("#drop-zone").scrollIntoView({ behavior: "smooth", block: "center" });
   };

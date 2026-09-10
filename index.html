@@ -78,10 +78,8 @@
     </header>
 
     <section class="converter-card">
-      <section id="step-upload" class="step-view active" aria-labelledby="upload-title">
+      <section id="step-upload" class="step-view active" aria-label="File upload">
         <div id="format-pair-badge" class="format-pair-badge" hidden></div>
-        <h1 id="upload-title">Convertivo</h1>
-        <p class="step-description">Drop any supported file below, or browse your device to get started.</p>
         <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Choose a file to convert or drop it here">
           <div class="upload-icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></div><h3>Drop your file here</h3><p>or click to browse any file</p>
           <button id="browse-btn" class="secondary-btn" type="button" aria-label="Choose files to convert">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.webm" hidden>
@@ -162,14 +160,6 @@
         -->
       </aside>
     </section>
-    <section class="format-matrix" aria-labelledby="format-matrix-title">
-      <h2 id="format-matrix-title">Popular Conversions</h2>
-      <div class="format-matrix-grid">
-        <div><h3>Image</h3><a data-pair-route="png-to-jpg" href="/png-to-jpg">PNG to JPG</a><a data-pair-route="webp-to-png" href="/webp-to-png">WEBP to PNG</a><a data-pair-route="heic-to-jpg" href="/heic-to-jpg">HEIC to JPG</a></div>
-        <div><h3>Document</h3><a data-pair-route="pdf-to-txt" href="/pdf-to-txt">PDF to TXT</a><a data-pair-route="txt-to-pdf" href="/txt-to-pdf">TXT to PDF</a></div>
-        <div><h3>Audio &amp; Video</h3><a data-pair-route="mp4-to-mp3" href="/mp4-to-mp3">MP4 to MP3</a><a data-pair-route="wav-to-mp3" href="/wav-to-mp3">WAV to MP3</a></div>
-      </div>
-    </section>
     <section class="features-section" aria-labelledby="features-title">
       <h2 id="features-title">Features &amp; Benefits</h2>
       <div class="features-grid">
@@ -192,7 +182,7 @@
 const bytes = await file.arrayBuffer();
 // Pass bytes to your browser-side JS or WebAssembly converter.</code></pre>
     </section>
-    <footer class="site-footer"><span class="trust-badge">Trusted by developers • 100% Client-Side WebAssembly</span><span class="footer-links"><span>© 2026 Convertivo</span><span>•</span><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></span></footer>
+    <footer class="site-footer"><span class="trust-badge">Trusted by developers • 100% Client-Side WebAssembly</span><span class="footer-links"><span>© 2026 Convertivo</span><span>•</span><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a href="/sitemap.xml">Sitemap</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></span></footer>
   </main>
   <dialog id="target-format-modal" class="target-format-modal" aria-labelledby="target-format-title">
     <div class="target-format-content">
