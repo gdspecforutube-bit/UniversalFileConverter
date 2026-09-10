@@ -1,6 +1,5 @@
 (() => {
   "use strict";
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
   const $ = (selector) => document.querySelector(selector);
   const input = $("#file-input");
   const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID";
@@ -10,9 +9,26 @@
   const CLOUD_BUTTONS_ENABLED = true;
   const ADSENSE_ENABLED = false;
   const GOOGLE_SCOPE = "https://www.googleapis.com/auth/drive.readonly";
+  const SITE_ORIGIN = "https://universal-file-converter-app.vercel.app";
   let configuredGoogleClientId = localStorage.getItem("googleDriveClientId") || GOOGLE_CLIENT_ID;
   let configuredDropboxAppKey = localStorage.getItem("dropboxAppKey") || DROPBOX_APP_KEY;
   let googleTokenClient = null, googleAccessToken = "";
+  let conversionDependencies = null;
+  const loadScript = (src) => new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error(`Could not load conversion library: ${src}`));
+    document.head.append(script);
+  });
+  const ensureConversionDependencies = () => conversionDependencies || (conversionDependencies = Promise.all([
+    loadScript("https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"),
+    loadScript("https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"),
+    loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"),
+    loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js")
+  ]).then(() => {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }));
   document.documentElement.dataset.adsense = ADSENSE_ENABLED ? "enabled" : "placeholder";
   const imageInputs = ["jpg","jpeg","png","webp","heic","avif","svg","bmp","gif","ico","tif","tiff"];
   const audioInputs = ["mp3","wav","aac","ogg","m4a","flac"];
@@ -49,6 +65,9 @@
     $('meta[property="og:description"]').setAttribute("content", description);
     $('meta[name="twitter:title"]').setAttribute("content", title);
     $('meta[name="twitter:description"]').setAttribute("content", description);
+    const routeUrl = hasPair ? `${SITE_ORIGIN}/${routeFrom}-to-${routeTo}` : `${SITE_ORIGIN}/`;
+    $('link[rel="canonical"]').setAttribute("href", routeUrl);
+    $('meta[property="og:url"]').setAttribute("content", routeUrl);
     const schema = JSON.parse($("#structured-data").textContent);
     schema["@graph"][0].description = description;
     schema["@graph"][0].featureList = hasPair ? [`${formatName(routeFrom)} to ${formatName(routeTo)} conversion`, "100% browser-based processing", "No registration required"] : schema["@graph"][0].featureList;
@@ -60,8 +79,9 @@
   };
   const applyUrlRoute = () => {
     const params = new URLSearchParams(location.search);
-    const from = (params.get("from") || "").toLowerCase();
-    const to = (params.get("to") || "").toLowerCase();
+    const pathPair = location.pathname.match(/\/([a-z0-9]+)-to-([a-z0-9]+)\/?$/i);
+    const from = (params.get("from") || pathPair?.[1] || "").toLowerCase();
+    const to = (params.get("to") || pathPair?.[2] || "").toLowerCase();
     routeFrom = allRouteFormats.includes(from) ? from : "";
     routeTo = allRouteFormats.includes(to) ? to : "";
     $("#input-format-select").value = routeFrom;
@@ -223,7 +243,7 @@
   async function convert() {
     const target=$("#format-trigger").dataset.value; showStep("result"); $("#result-title").textContent = "Converting your file..."; $("#success-card").hidden = true; $("#download-btn").hidden = true; setProgress(12,"Reading source file...");
     $("#conversion-spinner").hidden = false;
-    try { await new Promise((resolve) => setTimeout(resolve,180)); const outputs = [];
+    try { await ensureConversionDependencies(); await new Promise((resolve) => setTimeout(resolve,180)); const outputs = [];
       for (const currentFile of files) {
         file = currentFile;
         setProgress(48, `Converting ${currentFile.name}...`);
@@ -245,7 +265,21 @@
   function $$(selector){return [...document.querySelectorAll(selector)]}
   $("#browse-btn").addEventListener("click",()=>input.click()); input.addEventListener("change",(event)=>selectFile(event.target.files)); $("#drop-zone").addEventListener("click",(event)=>{if(event.target.tagName!=="BUTTON")input.click()}); $("#drop-zone").addEventListener("keydown",(event)=>{if(event.key==="Enter"||event.key===" ")input.click()});
   $("#input-format-select").addEventListener("change", (event) => { routeFrom = event.target.value; input.accept = routeFrom ? `.${routeFrom}` : input.accept; updateRouteMetadata(); });
-  ["dragover","dragenter"].forEach((name)=>$("#drop-zone").addEventListener(name,(event)=>{event.preventDefault();$("#drop-zone").classList.add("dragging")})); $("#drop-zone").addEventListener("dragleave",()=>$("#drop-zone").classList.remove("dragging")); $("#drop-zone").addEventListener("drop",(event)=>{event.preventDefault();$("#drop-zone").classList.remove("dragging");selectFile(event.dataTransfer.files)});
+  $$("[data-pair-route]").forEach((link) => link.addEventListener("click", (event) => {
+    event.preventDefault();
+    const pair = link.dataset.pairRoute.split("-to-");
+    history.pushState({}, "", `/${link.dataset.pairRoute}`);
+    routeFrom = pair[0];
+    routeTo = pair[1];
+    preferredTarget = routeTo;
+    $("#input-format-select").value = routeFrom;
+    input.accept = `.${routeFrom}`;
+    updateRouteMetadata();
+  }));
+  let dragDepth = 0;
+  ["dragover","dragenter"].forEach((name)=>document.addEventListener(name,(event)=>{if (!event.dataTransfer?.types.includes("Files")) return; event.preventDefault(); dragDepth += 1; document.body.classList.add("dragging-window"); $("#drop-zone").classList.add("dragging");}));
+  document.addEventListener("dragleave",(event)=>{if (!event.dataTransfer?.types.includes("Files")) return; dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) { document.body.classList.remove("dragging-window"); $("#drop-zone").classList.remove("dragging"); }});
+  document.addEventListener("drop",(event)=>{if (!event.dataTransfer?.types.includes("Files")) return; event.preventDefault(); dragDepth = 0; document.body.classList.remove("dragging-window"); $("#drop-zone").classList.remove("dragging"); if (event.target.closest("#drop-zone")) selectFile(event.dataTransfer.files);});
   $("#change-file").addEventListener("click",reset); $("#convert-btn").addEventListener("click",convert); $("#another-btn").addEventListener("click",reset);
   $("#quality-range").addEventListener("input",(event)=>$("#quality-value").textContent = `${event.target.value}%`);
   $("#format-trigger").addEventListener("click", () => { const menu = $("#format-menu"); const open = !menu.classList.contains("open"); menu.classList.toggle("open", open); $("#format-trigger").setAttribute("aria-expanded", String(open)); });

@@ -11,7 +11,7 @@ const xmlEscape = (value) => value.replace(/&/g, "&amp;");
 const urls = [base, `${base}png-to-jpg`, `${base}pdf-to-word`, `${base}mp4-to-mp3`];
 for (const from of formats) {
   for (const to of formats) {
-    if (from !== to) urls.push(`${base}?from=${from}&to=${to}`);
+    if (from !== to) urls.push(`${base}${from}-to-${to}`);
   }
 }
 const body = urls.map((url, index) => `  <url>\n    <loc>${xmlEscape(url)}</loc>\n    <lastmod>2026-09-10</lastmod>\n    <changefreq>${index === 0 ? "weekly" : "monthly"}</changefreq>\n    <priority>${index === 0 ? "1.0" : "0.7"}</priority>\n  </url>`).join("\n");

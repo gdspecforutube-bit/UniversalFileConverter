@@ -47,10 +47,6 @@
   <script src="https://accounts.google.com/gsi/client"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script id="dropboxjs" data-app-key="YOUR_DROPBOX_APP_KEY" src="https://www.dropbox.com/static/api/2/dropins.js"></script>
-  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -107,9 +103,9 @@
       <section class="format-matrix" aria-labelledby="format-matrix-title">
         <h2 id="format-matrix-title">Popular conversions</h2>
         <div class="format-matrix-grid">
-          <div><h3>Image</h3><a href="?from=png&amp;to=jpg">PNG to JPG</a><a href="?from=webp&amp;to=png">WEBP to PNG</a><a href="?from=heic&amp;to=jpg">HEIC to JPG</a></div>
-          <div><h3>Document</h3><a href="?from=pdf&amp;to=txt">PDF to TXT</a><a href="?from=txt&amp;to=pdf">TXT to PDF</a></div>
-          <div><h3>Audio &amp; Video</h3><a href="?from=mp4&amp;to=mp3">MP4 to MP3</a><a href="?from=wav&amp;to=mp3">WAV to MP3</a></div>
+          <div><h3>Image</h3><a data-pair-route="png-to-jpg" href="/png-to-jpg">PNG to JPG</a><a data-pair-route="webp-to-png" href="/webp-to-png">WEBP to PNG</a><a data-pair-route="heic-to-jpg" href="/heic-to-jpg">HEIC to JPG</a></div>
+          <div><h3>Document</h3><a data-pair-route="pdf-to-txt" href="/pdf-to-txt">PDF to TXT</a><a data-pair-route="txt-to-pdf" href="/txt-to-pdf">TXT to PDF</a></div>
+          <div><h3>Audio &amp; Video</h3><a data-pair-route="mp4-to-mp3" href="/mp4-to-mp3">MP4 to MP3</a><a data-pair-route="wav-to-mp3" href="/wav-to-mp3">WAV to MP3</a></div>
         </div>
       </section>
 
@@ -200,7 +196,7 @@
 const bytes = await file.arrayBuffer();
 // Pass bytes to your browser-side JS or WebAssembly converter.</code></pre>
     </section>
-    <footer class="site-footer"><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></footer>
+    <footer class="site-footer"><span class="trust-badge">Trusted by developers • 100% Client-Side WebAssembly</span><span class="footer-links"><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></span></footer>
   </main>
   <!-- Legacy API and cloud dialogs removed; integrations use inline docs and official pickers. -->
   <!--
