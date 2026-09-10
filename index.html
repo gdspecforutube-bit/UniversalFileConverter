@@ -18,7 +18,7 @@
   <link rel="canonical" href="https://universal-file-converter-app.vercel.app/">
   <title>Universal File Converter – Fast, Free &amp; Private Online Converter</title>
   <link rel="stylesheet" href="style.css">
-  <script type="application/ld+json">{
+  <script id="structured-data" type="application/ld+json">{
     "@context":"https://schema.org",
     "@graph":[
       {
@@ -83,8 +83,12 @@
 
     <section class="converter-card">
       <section id="step-upload" class="step-view active" aria-labelledby="upload-title">
-        <h2 id="upload-title">Upload your file</h2>
+        <p class="eyebrow">Private browser conversion</p><div id="format-pair-badge" class="format-pair-badge" hidden></div>
+        <h1 id="upload-title">Universal File Converter</h1>
         <p class="step-description">Drop any supported file below, or browse your device to get started.</p>
+        <label class="input-format-control" for="input-format-select">Input format
+          <select id="input-format-select"><option value="">Auto-detect format</option><option value="jpg">JPG</option><option value="png">PNG</option><option value="webp">WEBP</option><option value="heic">HEIC</option><option value="gif">GIF</option><option value="svg">SVG</option><option value="pdf">PDF</option><option value="txt">TXT</option><option value="mp3">MP3</option><option value="wav">WAV</option><option value="mp4">MP4</option></select>
+        </label>
         <div id="drop-zone" class="drop-zone" tabindex="0">
           <div class="upload-icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></div><h3>Drop your file here</h3><p>or click to browse any file</p>
           <button id="browse-btn" class="secondary-btn" type="button">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.webm" hidden>
@@ -98,6 +102,14 @@
             <svg class="cloud-brand-icon dropbox-icon" viewBox="0 0 18 18" aria-hidden="true"><path fill="#0061ff" d="m2 5.1 4-2.5 3 2.5-3 2.5zm7 0 3-2.5 4 2.5-4 2.5zM2 9.4l4-2.5 3 2.5-3 2.5zm7 0 3-2.5 4 2.5-4 2.5zm-3 4.2 3-1.8 3 1.8-3 1.9z"/></svg>
             <span>Import from Dropbox</span>
           </button>
+        </div>
+      </section>
+      <section class="format-matrix" aria-labelledby="format-matrix-title">
+        <h2 id="format-matrix-title">Popular conversions</h2>
+        <div class="format-matrix-grid">
+          <div><h3>Image</h3><a href="?from=png&amp;to=jpg">PNG to JPG</a><a href="?from=webp&amp;to=png">WEBP to PNG</a><a href="?from=heic&amp;to=jpg">HEIC to JPG</a></div>
+          <div><h3>Document</h3><a href="?from=pdf&amp;to=txt">PDF to TXT</a><a href="?from=txt&amp;to=pdf">TXT to PDF</a></div>
+          <div><h3>Audio &amp; Video</h3><a href="?from=mp4&amp;to=mp3">MP4 to MP3</a><a href="?from=wav&amp;to=mp3">WAV to MP3</a></div>
         </div>
       </section>
 

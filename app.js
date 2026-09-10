@@ -35,6 +35,40 @@
     font: { title: "Font Converter", subtitle: "Convert font files in your browser.", accept: ".ttf,.otf,.woff,.woff2", categories: { font: [["ttf", "TTF (.ttf)"], ["otf", "OTF (.otf)"], ["woff", "WOFF (.woff)"], ["woff2", "WOFF2 (.woff2)"]] } }
   };
   let file = null, files = [], outputBlob = null, outputName = "", compressMode = false, preferredTarget = "";
+  let routeFrom = "", routeTo = "";
+  const routeFormats = { image: ["jpg", "png", "webp", "heic", "gif", "svg"], document: ["pdf", "txt"], media: ["mp3", "wav", "mp4"] };
+  const allRouteFormats = Object.values(routeFormats).flat();
+  const formatName = (value) => value.toUpperCase();
+  const updateRouteMetadata = () => {
+    const hasPair = routeFrom && routeTo;
+    const title = hasPair ? `Convert ${formatName(routeFrom)} to ${formatName(routeTo)} Online` : "Universal File Converter – Fast, Free & Private Online Converter";
+    const description = hasPair ? `Convert ${formatName(routeFrom)} to ${formatName(routeTo)} online for free with fast, private browser-based processing. No registration or file uploads required.` : "Fast, free and private client-side file converter for PDF to Word, PNG to JPG, image, document and audio conversions directly in your browser.";
+    document.title = title;
+    $('meta[name="description"]').setAttribute("content", description);
+    $('meta[property="og:title"]').setAttribute("content", title);
+    $('meta[property="og:description"]').setAttribute("content", description);
+    $('meta[name="twitter:title"]').setAttribute("content", title);
+    $('meta[name="twitter:description"]').setAttribute("content", description);
+    const schema = JSON.parse($("#structured-data").textContent);
+    schema["@graph"][0].description = description;
+    schema["@graph"][0].featureList = hasPair ? [`${formatName(routeFrom)} to ${formatName(routeTo)} conversion`, "100% browser-based processing", "No registration required"] : schema["@graph"][0].featureList;
+    $("#structured-data").textContent = JSON.stringify(schema);
+    const badge = $("#format-pair-badge");
+    badge.hidden = !hasPair;
+    badge.textContent = hasPair ? `${formatName(routeFrom)} ➜ ${formatName(routeTo)}` : "";
+    $("#upload-title").textContent = hasPair ? title : "Universal File Converter";
+  };
+  const applyUrlRoute = () => {
+    const params = new URLSearchParams(location.search);
+    const from = (params.get("from") || "").toLowerCase();
+    const to = (params.get("to") || "").toLowerCase();
+    routeFrom = allRouteFormats.includes(from) ? from : "";
+    routeTo = allRouteFormats.includes(to) ? to : "";
+    $("#input-format-select").value = routeFrom;
+    preferredTarget = routeTo;
+    if (routeFrom) input.accept = `.${routeFrom}`;
+    updateRouteMetadata();
+  };
   const ext = (name) => name.toLowerCase().match(/\.([a-z0-9]+)$/)?.[1] || "";
   const groupFor = (name) => documentInputs.includes(ext(name)) ? "document" : audioInputs.includes(ext(name)) || ext(name) === "webm" ? "audio" : "image";
   const normalizedExt = (name) => ext(name) === "jpeg" ? "jpg" : ext(name);
@@ -50,7 +84,10 @@
     const optionsByCategory = sourceGroup === "image" || sourceGroup === "document"
       ? { document: targetFormats.document.filter(([value]) => ["docx", "pdf", "txt"].includes(value)), image: targetFormats.image }
       : { audio: targetFormats.audio };
-    renderFormats(Object.entries(optionsByCategory).map(([category, entries]) => [category, entries.filter(([value]) => value !== sourceExt)]).filter(([, entries]) => entries.length));
+    const rendered = Object.entries(optionsByCategory).map(([category, entries]) => [category, entries.filter(([value]) => value !== sourceExt)]).filter(([, entries]) => entries.length);
+    renderFormats(rendered);
+    const targetOption = rendered.flatMap(([, entries]) => entries).find(([value]) => value === preferredTarget);
+    if (targetOption) setCustomFormat(targetOption[0], targetOption[1]);
   }
   function renderFormats(categoryEntries) {
     const menu = $("#format-menu");
@@ -207,6 +244,7 @@
   }
   function $$(selector){return [...document.querySelectorAll(selector)]}
   $("#browse-btn").addEventListener("click",()=>input.click()); input.addEventListener("change",(event)=>selectFile(event.target.files)); $("#drop-zone").addEventListener("click",(event)=>{if(event.target.tagName!=="BUTTON")input.click()}); $("#drop-zone").addEventListener("keydown",(event)=>{if(event.key==="Enter"||event.key===" ")input.click()});
+  $("#input-format-select").addEventListener("change", (event) => { routeFrom = event.target.value; input.accept = routeFrom ? `.${routeFrom}` : input.accept; updateRouteMetadata(); });
   ["dragover","dragenter"].forEach((name)=>$("#drop-zone").addEventListener(name,(event)=>{event.preventDefault();$("#drop-zone").classList.add("dragging")})); $("#drop-zone").addEventListener("dragleave",()=>$("#drop-zone").classList.remove("dragging")); $("#drop-zone").addEventListener("drop",(event)=>{event.preventDefault();$("#drop-zone").classList.remove("dragging");selectFile(event.dataTransfer.files)});
   $("#change-file").addEventListener("click",reset); $("#convert-btn").addEventListener("click",convert); $("#another-btn").addEventListener("click",reset);
   $("#quality-range").addEventListener("input",(event)=>$("#quality-value").textContent = `${event.target.value}%`);
@@ -357,6 +395,7 @@
   $("#save-cookie-preferences").addEventListener("click", () => saveCookieConsent(JSON.stringify({ analytics: $("#analytics-consent").checked, marketing: $("#marketing-consent").checked })));
   $$("a[data-route]").forEach((link) => link.addEventListener("click", () => history.pushState({}, "", link.getAttribute("href"))));
   window.addEventListener("popstate", () => { const route = location.hash.slice(1); const link = $(`[data-route="${route}"]`); if (link) routeMenuItem(link); });
+  applyUrlRoute();
   const initialRoute = location.hash.slice(1);
   const initialRouteLink = $(`#tools-panel [data-route="${initialRoute}"]`);
   if (initialRouteLink) routeMenuItem(initialRouteLink);

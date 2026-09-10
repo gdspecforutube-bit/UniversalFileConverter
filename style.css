@@ -93,6 +93,17 @@ body{min-height:100vh;overflow-x:hidden;background:var(--page);color:var(--ink);
 .site-header{height:68px;margin:0 calc((1120px - 100vw)/2);padding:0 max(24px,calc((100vw - 1120px)/2));border-bottom:1px solid rgba(255,255,255,.1);background:#0f172a}
 .nav-logo,.nav-logo strong{color:#fff}.header-nav button{color:#fff}.header-nav button:hover,.header-nav button:focus-visible{color:#bfdbfe}
 .converter-card{max-width:680px;min-height:620px;margin:0 auto;border-color:var(--line);background:#161b26;box-shadow:0 20px 60px rgba(0,0,0,.24)}
+.converter-card h1{margin:0;text-align:center;color:#fff;font-size:clamp(1.55rem,4vw,2rem);letter-spacing:-.04em}
+.format-pair-badge{width:max-content;margin:4px auto 10px;padding:8px 16px;border:1px solid rgba(96,165,250,.45);border-radius:999px;color:#bfdbfe;background:rgba(37,99,235,.18);font-size:1.05rem;font-weight:800;letter-spacing:.04em}
+.input-format-control{display:flex;max-width:240px;flex-direction:column;gap:6px;margin:0 auto 14px;color:#cbd5e1;font-size:.76rem;font-weight:700}
+.input-format-control select{padding:9px 10px;border:1px solid rgba(255,255,255,.12);border-radius:7px;color:#f8fafc;background:#161b26}
+.format-matrix{max-width:680px;margin:32px auto 0;padding:24px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#121824}
+.format-matrix h2{margin:0 0 16px;color:#fff;font-size:1.1rem}
+.format-matrix-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.format-matrix-grid>div{padding:14px;border:1px solid rgba(59,130,246,.2);border-radius:9px;background:#161b26}
+.format-matrix-grid h3{margin:0 0 8px;color:#f8fafc;font-size:.82rem}
+.format-matrix-grid a{display:block;padding:4px 0;color:#93c5fd;font-size:.78rem;text-decoration:none}
+.format-matrix-grid a:hover{color:#fff;text-decoration:underline}
 .drop-zone,.file-card,.format-label select,.advanced-settings,.progress-box{border-color:rgba(255,255,255,.12);background:#0f141e;color:#f8fafc}
 .drop-zone:hover,.drop-zone.dragging,.drop-zone:focus-visible{border-color:#3b82f6;background:#111c31;box-shadow:0 0 24px rgba(59,130,246,.2)}
 .step-description,.drop-zone p,.file-details small,.format-label,.progress-label{color:#94a3b8}
@@ -135,6 +146,7 @@ body{min-height:100vh;overflow-x:hidden;background:var(--page);color:var(--ink);
 .site-footer a:hover{color:var(--blue)}
 @media(max-width:520px){.page{padding:0 16px 40px}.site-header{margin:0 -16px 32px;padding:0 16px}.nav-logo{gap:9px;font-size:1rem}.nav-logo .brand-mark{width:34px;height:34px}.header-nav{gap:12px}.header-nav a{font-size:.78rem}.features-grid,.conversion-guide-grid{grid-template-columns:1fr}.features-section,.conversion-guides,.faq-section{padding:18px}}
 @media(max-width:520px){.landing-page{width:calc(100% - 24px);padding-top:24px}.landing-card{padding:24px}.landing-card h1{font-size:2rem}.landing-card p:not(.eyebrow){font-size:.9rem}}
+@media(max-width:520px){.format-matrix{padding:18px}.format-matrix-grid{grid-template-columns:1fr}}
 @media(max-width:700px){
   .site-header{height:auto;min-height:64px;flex-wrap:wrap;gap:10px;padding-top:10px;padding-bottom:10px}
   .nav-logo{min-width:0}
