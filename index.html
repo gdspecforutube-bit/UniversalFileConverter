@@ -79,12 +79,9 @@
 
     <section class="converter-card">
       <section id="step-upload" class="step-view active" aria-labelledby="upload-title">
-        <p class="eyebrow">Private browser conversion</p><div id="format-pair-badge" class="format-pair-badge" hidden></div>
+        <div id="format-pair-badge" class="format-pair-badge" hidden></div>
         <h1 id="upload-title">Universal File Converter</h1>
         <p class="step-description">Drop any supported file below, or browse your device to get started.</p>
-        <label class="input-format-control" for="input-format-select">Input format
-          <select id="input-format-select"><option value="">Auto-detect format</option><option value="jpg">JPG</option><option value="png">PNG</option><option value="webp">WEBP</option><option value="heic">HEIC</option><option value="gif">GIF</option><option value="svg">SVG</option><option value="pdf">PDF</option><option value="txt">TXT</option><option value="mp3">MP3</option><option value="wav">WAV</option><option value="mp4">MP4</option></select>
-        </label>
         <div id="drop-zone" class="drop-zone" tabindex="0">
           <div class="upload-icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></div><h3>Drop your file here</h3><p>or click to browse any file</p>
           <button id="browse-btn" class="secondary-btn" type="button">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.webm" hidden>
@@ -197,6 +194,20 @@ const bytes = await file.arrayBuffer();
     </section>
     <footer class="site-footer"><span class="trust-badge">Trusted by developers • 100% Client-Side WebAssembly</span><span class="footer-links"><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></span></footer>
   </main>
+  <dialog id="target-format-modal" class="target-format-modal" aria-labelledby="target-format-title">
+    <div class="target-format-content">
+      <button id="close-target-format" class="panel-close" type="button" aria-label="Close target format picker">×</button>
+      <h2 id="target-format-title">Choose an output format</h2>
+      <p id="target-format-source" class="target-format-source"></p>
+      <label class="target-format-search" for="target-format-search">Search formats
+        <input id="target-format-search" type="search" placeholder="Search PNG, SVG, WEBP..." autocomplete="off">
+      </label>
+      <div class="target-format-picker">
+        <nav id="target-format-categories" class="target-format-categories" aria-label="Format categories"></nav>
+        <div id="target-format-options" class="target-format-options" role="listbox"></div>
+      </div>
+    </div>
+  </dialog>
   <!-- Legacy API and cloud dialogs removed; integrations use inline docs and official pickers. -->
   <!--
   <dialog id="api-modal" class="api-modal"><button id="close-api" class="panel-close" type="button" aria-label="Close API dialog">×</button><h2>Developer API</h2><p>Use the browser converter UI or connect your own backend endpoint.</p><pre><code>POST /v1/convert

@@ -84,7 +84,6 @@
     const to = (params.get("to") || pathPair?.[2] || "").toLowerCase();
     routeFrom = allRouteFormats.includes(from) ? from : "";
     routeTo = allRouteFormats.includes(to) ? to : "";
-    $("#input-format-select").value = routeFrom;
     preferredTarget = routeTo;
     if (routeFrom) input.accept = `.${routeFrom}`;
     updateRouteMetadata();
@@ -106,6 +105,7 @@
       : { audio: targetFormats.audio };
     const rendered = Object.entries(optionsByCategory).map(([category, entries]) => [category, entries.filter(([value]) => value !== sourceExt)]).filter(([, entries]) => entries.length);
     renderFormats(rendered);
+    renderTargetPicker(rendered);
     const targetOption = rendered.flatMap(([, entries]) => entries).find(([value]) => value === preferredTarget);
     if (targetOption) setCustomFormat(targetOption[0], targetOption[1]);
   }
@@ -130,6 +130,43 @@
     });
     setCustomFormat(categoryEntries[0]?.[1]?.[0]?.[0] || "", categoryEntries[0]?.[1]?.[0]?.[1] || "");
   }
+  function renderTargetPicker(categoryEntries) {
+    const options = $("#target-format-options");
+    const categories = $("#target-format-categories");
+    options.replaceChildren();
+    categories.replaceChildren();
+    const categoryNames = { document: "Documents", image: "Images", audio: "Audio", video: "Video" };
+    categoryEntries.forEach(([category, entries], index) => {
+      const categoryButton = document.createElement("button");
+      categoryButton.type = "button";
+      categoryButton.className = "target-format-category";
+      categoryButton.textContent = categoryNames[category] || category;
+      categoryButton.dataset.category = category;
+      categoryButton.addEventListener("click", () => {
+        $$(".target-format-category").forEach((item) => item.classList.toggle("active", item === categoryButton));
+        $$(".target-format-option").forEach((item) => { item.hidden = item.dataset.category !== category; });
+      });
+      categories.append(categoryButton);
+      entries.forEach(([value, text]) => {
+        const option = document.createElement("button");
+        option.type = "button";
+        option.className = "target-format-option";
+        option.dataset.category = category;
+        option.dataset.value = value;
+        option.textContent = value === "jpg" ? "JPEG" : text.replace(/\s*\([^)]*\)/, "");
+        option.addEventListener("click", () => {
+          setCustomFormat(value, text);
+          $("#target-format-modal").close();
+          convert();
+        });
+        options.append(option);
+      });
+      if (index === 0) categoryButton.click();
+    });
+    $("#target-format-search").value = "";
+    $("#target-format-source").textContent = `Detected ${formatName(normalizedExt(file.name))} file: ${file.name}`;
+  }
+  const openTargetPicker = () => $("#target-format-modal").showModal();
   function setCustomFormat(value, text) {
     const trigger = $("#format-trigger");
     trigger.dataset.value = value;
@@ -153,6 +190,7 @@
     $("#file-meta").textContent = `${files.length > 1 ? `${files.length} files · ` : ""}${size(file.size)} · ${groupFor(file.name)} file`;
     populateFormats();
     showStep("convert");
+    openTargetPicker();
   }
   function reset() { file = null; files = []; outputBlob = null; outputName = ""; input.value = ""; $("#success-card").hidden = true; $("#download-btn").hidden = true; $("#download-btn").removeAttribute("href"); $("#progress-bar").style.width = "0%"; $("#progress-value").textContent = "0%"; $("#result-title").textContent = "Converting your file..."; setProgress(0, "Preparing your conversion..."); showStep("upload"); }
   function setMode(mode) {
@@ -264,7 +302,6 @@
   }
   function $$(selector){return [...document.querySelectorAll(selector)]}
   $("#browse-btn").addEventListener("click",()=>input.click()); input.addEventListener("change",(event)=>selectFile(event.target.files)); $("#drop-zone").addEventListener("click",(event)=>{if(event.target.tagName!=="BUTTON")input.click()}); $("#drop-zone").addEventListener("keydown",(event)=>{if(event.key==="Enter"||event.key===" ")input.click()});
-  $("#input-format-select").addEventListener("change", (event) => { routeFrom = event.target.value; input.accept = routeFrom ? `.${routeFrom}` : input.accept; updateRouteMetadata(); });
   $$("[data-pair-route]").forEach((link) => link.addEventListener("click", (event) => {
     event.preventDefault();
     const pair = link.dataset.pairRoute.split("-to-");
@@ -272,7 +309,6 @@
     routeFrom = pair[0];
     routeTo = pair[1];
     preferredTarget = routeTo;
-    $("#input-format-select").value = routeFrom;
     input.accept = `.${routeFrom}`;
     updateRouteMetadata();
   }));
@@ -283,6 +319,12 @@
   $("#change-file").addEventListener("click",reset); $("#convert-btn").addEventListener("click",convert); $("#another-btn").addEventListener("click",reset);
   $("#quality-range").addEventListener("input",(event)=>$("#quality-value").textContent = `${event.target.value}%`);
   $("#format-trigger").addEventListener("click", () => { const menu = $("#format-menu"); const open = !menu.classList.contains("open"); menu.classList.toggle("open", open); $("#format-trigger").setAttribute("aria-expanded", String(open)); });
+  $("#target-format-search").addEventListener("input", (event) => {
+    const query = event.target.value.trim().toLowerCase();
+    $$(".target-format-option").forEach((option) => { option.hidden = query ? !option.textContent.toLowerCase().includes(query) : option.dataset.category !== $(".target-format-category.active")?.dataset.category; });
+  });
+  $("#close-target-format").addEventListener("click", () => $("#target-format-modal").close());
+  $("#target-format-modal").addEventListener("click", (event) => { if (event.target === $("#target-format-modal")) $("#target-format-modal").close(); });
   const goConvert = () => { $("#tools-panel").hidden = true; setMode("convert"); reset(); document.querySelector(".converter-card").scrollIntoView({ behavior: "smooth", block: "start" }); };
   $("#convert-nav").addEventListener("click", goConvert);
   $("#compress-nav").addEventListener("click", () => { $("#tools-panel").hidden = true; setMode("compress"); document.querySelector(".converter-card").scrollIntoView({ behavior: "smooth", block: "start" }); });
