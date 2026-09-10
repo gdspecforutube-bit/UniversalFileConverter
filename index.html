@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Fast, free and private client-side file converter for PDF to Word, PNG to JPG, image, document and audio conversions directly in your browser.">
+  <meta name="description" content="Convertivo is a fast, free and private online file converter for images, documents and audio directly in your browser.">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="LrYQmGVhcLNHpQTaWi9VNTGM_eqva3tjVQg7hI_ntlU">
-  <meta property="og:title" content="Universal File Converter – Fast, Free &amp; Private Online Converter">
-  <meta property="og:description" content="Convert PDF to Word, PNG to JPG and more with fast, private browser-based processing.">
+  <meta property="og:title" content="Convertivo — Fast, Free &amp; Private Online File Converter">
+  <meta property="og:description" content="Convert images, documents and audio quickly in your browser with Convertivo. No uploads required.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://universal-file-converter-app.vercel.app/">
   <meta property="og:image" content="https://universal-file-converter-app.vercel.app/og-image.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Universal File Converter – Fast, Free &amp; Private Online Converter">
-  <meta name="twitter:description" content="Private client-side PDF, image, document and audio conversion with no uploads.">
+  <meta name="twitter:title" content="Convertivo — Fast, Free &amp; Private Online File Converter">
+  <meta name="twitter:description" content="Convert images, documents and audio privately in your browser with Convertivo. No uploads required.">
   <meta name="twitter:image" content="https://universal-file-converter-app.vercel.app/og-image.svg">
   <link rel="canonical" href="https://universal-file-converter-app.vercel.app/">
-  <title>Universal File Converter – Fast, Free &amp; Private Online Converter</title>
+  <title>Convertivo — Fast, Free &amp; Private Online File Converter</title>
   <link rel="stylesheet" href="style.css">
   <script id="structured-data" type="application/ld+json">{
     "@context":"https://schema.org",
@@ -24,9 +24,9 @@
       {
         "@type":"WebApplication",
         "@id":"https://universal-file-converter-app.vercel.app/#application",
-        "name":"Universal File Converter",
+        "name":"Convertivo",
         "url":"https://universal-file-converter-app.vercel.app/",
-        "description":"Fast, free and private client-side conversion for PNG to JPG, PDF to Word, MP4 to MP3, images, documents, audio and more.",
+        "description":"Convertivo provides fast, free and private client-side conversion for images, documents, audio and more.",
         "applicationCategory":"UtilitiesApplication",
         "operatingSystem":"Any",
         "browserRequirements":"Requires a modern browser with JavaScript enabled.",
@@ -52,9 +52,9 @@
 <body>
   <main class="page">
     <header class="site-header">
-      <a class="nav-logo" href="#" aria-label="Universal File Converter">
+      <a class="nav-logo" href="#" aria-label="Convertivo home">
         <span class="brand-mark" aria-hidden="true">⇄</span>
-        <strong>Universal File Converter</strong>
+        <strong>Convertivo</strong>
       </a>
       <nav class="header-nav" aria-label="Main navigation">
         <div class="tools-menu">
@@ -80,11 +80,11 @@
     <section class="converter-card">
       <section id="step-upload" class="step-view active" aria-labelledby="upload-title">
         <div id="format-pair-badge" class="format-pair-badge" hidden></div>
-        <h1 id="upload-title">Universal File Converter</h1>
+        <h1 id="upload-title">Convertivo</h1>
         <p class="step-description">Drop any supported file below, or browse your device to get started.</p>
-        <div id="drop-zone" class="drop-zone" tabindex="0">
+        <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Choose a file to convert or drop it here">
           <div class="upload-icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></div><h3>Drop your file here</h3><p>or click to browse any file</p>
-          <button id="browse-btn" class="secondary-btn" type="button">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.webm" hidden>
+          <button id="browse-btn" class="secondary-btn" type="button" aria-label="Choose files to convert">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.webm" hidden>
         </div>
         <div class="cloud-import-group">
           <button id="drive-btn" type="button" aria-label="Import a file from Google Drive">
@@ -99,10 +99,10 @@
       </section>
       <section id="step-convert" class="step-view" aria-labelledby="convert-title" hidden>
         <h2 id="convert-title">Choose a format</h2><p class="step-description">Select the output format for your uploaded file.</p>
-        <div class="file-card"><div class="file-icon">FILE</div><div class="file-details"><strong id="file-name"></strong><small id="file-meta"></small></div><button id="change-file" class="change-btn" type="button">Remove / Change</button></div>
+        <div class="file-card"><div class="file-icon" aria-hidden="true">FILE</div><div class="file-details"><strong id="file-name"></strong><small id="file-meta"></small></div><button id="change-file" class="change-btn" type="button" aria-label="Remove the selected file and choose another">Remove / Change</button></div>
         <div class="format-label">Convert to
           <div id="format-select" class="custom-dropdown">
-            <button id="format-trigger" class="custom-dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+            <button id="format-trigger" class="custom-dropdown-trigger" type="button" aria-label="Select output format" aria-haspopup="listbox" aria-expanded="false"></button>
             <div id="format-menu" class="custom-dropdown-menu" role="listbox" tabindex="-1"></div>
           </div>
         </div>
@@ -112,7 +112,7 @@
           <label>Resize height<input id="resize-height" type="number" min="1" placeholder="Original"></label>
           <label>PDF pages<select id="page-range"><option value="all">All Pages</option><option value="first">Page 1 only</option></select></label>
         </div></details>
-        <button id="convert-btn" class="primary-btn" type="button">Convert File Now</button>
+        <button id="convert-btn" class="primary-btn" type="button" aria-label="Convert the selected file">Convert File Now</button>
       </section>
 
       <section id="step-result" class="step-view" aria-labelledby="result-title" hidden>
@@ -192,7 +192,7 @@
 const bytes = await file.arrayBuffer();
 // Pass bytes to your browser-side JS or WebAssembly converter.</code></pre>
     </section>
-    <footer class="site-footer"><span class="trust-badge">Trusted by developers • 100% Client-Side WebAssembly</span><span class="footer-links"><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></span></footer>
+    <footer class="site-footer"><span class="trust-badge">Trusted by developers • 100% Client-Side WebAssembly</span><span class="footer-links"><span>© 2026 Convertivo</span><span>•</span><a id="image-converter-link" href="#image" data-route="image">Image Converter</a><span>•</span><a id="pdf-converter-link" href="#pdf" data-route="pdf">PDF Converter</a><span>•</span><a href="#" data-tool="compress">Compress</a><span>•</span><a id="impressum-link" href="#">Impressum</a><span>•</span><a id="privacy-link" href="#">Privacy</a><span>•</span><a id="terms-link" href="#">Terms</a></span></footer>
   </main>
   <dialog id="target-format-modal" class="target-format-modal" aria-labelledby="target-format-title">
     <div class="target-format-content">
@@ -200,7 +200,7 @@ const bytes = await file.arrayBuffer();
       <h2 id="target-format-title">Choose an output format</h2>
       <p id="target-format-source" class="target-format-source"></p>
       <label class="target-format-search" for="target-format-search">Search formats
-        <input id="target-format-search" type="search" placeholder="Search PNG, SVG, WEBP..." autocomplete="off">
+        <input id="target-format-search" type="search" aria-label="Search output formats" placeholder="Search PNG, SVG, WEBP..." autocomplete="off">
       </label>
       <div class="target-format-picker">
         <nav id="target-format-categories" class="target-format-categories" aria-label="Format categories"></nav>

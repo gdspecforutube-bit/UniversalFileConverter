@@ -57,8 +57,9 @@
   const formatName = (value) => value.toUpperCase();
   const updateRouteMetadata = () => {
     const hasPair = routeFrom && routeTo;
-    const title = hasPair ? `Convert ${formatName(routeFrom)} to ${formatName(routeTo)} Online` : "Universal File Converter – Fast, Free & Private Online Converter";
-    const description = hasPair ? `Convert ${formatName(routeFrom)} to ${formatName(routeTo)} online for free with fast, private browser-based processing. No registration or file uploads required.` : "Fast, free and private client-side file converter for PDF to Word, PNG to JPG, image, document and audio conversions directly in your browser.";
+    const pairLabel = hasPair ? `${formatName(routeFrom)} to ${formatName(routeTo)}` : "";
+    const title = hasPair ? `Convert ${pairLabel} Online (Free & Private) — Convertivo` : "Convertivo — Fast, Free & Private Online File Converter";
+    const description = hasPair ? `Convert ${formatName(routeFrom)} files to ${formatName(routeTo)} instantly in your browser with Convertivo. 100% private, client-side conversion. No uploads required.` : "Convertivo is a fast, free and private online file converter for images, documents and audio directly in your browser.";
     document.title = title;
     $('meta[name="description"]').setAttribute("content", description);
     $('meta[property="og:title"]').setAttribute("content", title);
@@ -69,13 +70,17 @@
     $('link[rel="canonical"]').setAttribute("href", routeUrl);
     $('meta[property="og:url"]').setAttribute("content", routeUrl);
     const schema = JSON.parse($("#structured-data").textContent);
+    schema["@graph"][0].name = hasPair ? `${pairLabel} Converter — Convertivo` : "Convertivo";
+    schema["@graph"][0].url = routeUrl;
     schema["@graph"][0].description = description;
+    schema["@graph"][0].operatingSystem = "Any";
+    schema["@graph"][0].applicationCategory = "UtilitiesApplication";
     schema["@graph"][0].featureList = hasPair ? [`${formatName(routeFrom)} to ${formatName(routeTo)} conversion`, "100% browser-based processing", "No registration required"] : schema["@graph"][0].featureList;
     $("#structured-data").textContent = JSON.stringify(schema);
     const badge = $("#format-pair-badge");
     badge.hidden = !hasPair;
     badge.textContent = hasPair ? `${formatName(routeFrom)} ➜ ${formatName(routeTo)}` : "";
-    $("#upload-title").textContent = hasPair ? title : "Universal File Converter";
+    $("#upload-title").textContent = hasPair ? `Convert ${pairLabel} Online` : "Convertivo";
   };
   const applyUrlRoute = () => {
     const params = new URLSearchParams(location.search);
@@ -151,6 +156,7 @@
         const option = document.createElement("button");
         option.type = "button";
         option.className = "target-format-option";
+        option.role = "option";
         option.dataset.category = category;
         option.dataset.value = value;
         option.textContent = value === "jpg" ? "JPEG" : text.replace(/\s*\([^)]*\)/, "");
