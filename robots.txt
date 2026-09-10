@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://universal-file-converter-app.vercel.app/sitemap.xml
+Sitemap: https://convertivo.vercel.app/sitemap.xml
