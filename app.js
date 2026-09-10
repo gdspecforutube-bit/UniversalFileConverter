@@ -9,7 +9,7 @@
   const CLOUD_BUTTONS_ENABLED = true;
   const ADSENSE_ENABLED = false;
   const GOOGLE_SCOPE = "https://www.googleapis.com/auth/drive.readonly";
-  const SITE_ORIGIN = "https://universal-file-converter-app.vercel.app";
+  const SITE_ORIGIN = "https://convertivo.app";
   let configuredGoogleClientId = localStorage.getItem("googleDriveClientId") || GOOGLE_CLIENT_ID;
   let configuredDropboxAppKey = localStorage.getItem("dropboxAppKey") || DROPBOX_APP_KEY;
   let googleTokenClient = null, googleAccessToken = "";
@@ -32,13 +32,15 @@
   document.documentElement.dataset.adsense = ADSENSE_ENABLED ? "enabled" : "placeholder";
   const imageInputs = ["jpg","jpeg","png","webp","heic","avif","svg","bmp","gif","ico","tif","tiff"];
   const audioInputs = ["mp3","wav","aac","ogg","m4a","flac"];
+  const videoInputs = ["mp4","webm"];
   const documentInputs = ["pdf","docx","txt"];
-  const supportedInputs = [...imageInputs, ...documentInputs, ...audioInputs, "webm"];
-  const mimeByExtension = { pdf: ["application/pdf"], docx: ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"], png: ["image/png"], jpg: ["image/jpeg"], jpeg: ["image/jpeg"], webp: ["image/webp"], heic: ["image/heic","image/heif"], avif: ["image/avif"], svg: ["image/svg+xml","image/svg"], bmp: ["image/bmp"], gif: ["image/gif"], ico: ["image/x-icon","image/vnd.microsoft.icon"], tif: ["image/tiff"], tiff: ["image/tiff"], txt: ["text/plain"], mp3: ["audio/mpeg","audio/mp3"], wav: ["audio/wav","audio/x-wav"], aac: ["audio/aac","audio/x-aac"], ogg: ["audio/ogg"], m4a: ["audio/mp4","audio/x-m4a"], flac: ["audio/flac","audio/x-flac"], webm: ["video/webm","audio/webm"] };
+  const supportedInputs = [...imageInputs, ...documentInputs, ...audioInputs, ...videoInputs];
+  const mimeByExtension = { pdf: ["application/pdf"], docx: ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"], png: ["image/png"], jpg: ["image/jpeg"], jpeg: ["image/jpeg"], webp: ["image/webp"], heic: ["image/heic","image/heif"], avif: ["image/avif"], svg: ["image/svg+xml","image/svg"], bmp: ["image/bmp"], gif: ["image/gif"], ico: ["image/x-icon","image/vnd.microsoft.icon"], tif: ["image/tiff"], tiff: ["image/tiff"], txt: ["text/plain"], mp3: ["audio/mpeg","audio/mp3"], wav: ["audio/wav","audio/x-wav"], aac: ["audio/aac","audio/x-aac"], ogg: ["audio/ogg"], m4a: ["audio/mp4","audio/x-m4a"], flac: ["audio/flac","audio/x-flac"], mp4: ["video/mp4"], webm: ["video/webm","audio/webm"] };
   const targetFormats = {
     image: [["png","PNG (.png)"],["jpg","JPG (.jpg)"],["webp","WEBP (.webp)"],["avif","AVIF (.avif)"],["svg","SVG (.svg)"]],
     audio: [["mp3","MP3 (.mp3)"],["wav","WAV (.wav)"],["ogg","OGG (.ogg)"],["m4a","M4A (.m4a)"],["flac","FLAC (.flac)"]],
-    document: [["docx","Word (.docx)"],["pdf","PDF (.pdf)"],["txt","TXT (.txt)"],["png","PNG (.png)"],["jpg","JPG (.jpg)"]]
+    document: [["docx","Word (.docx)"],["pdf","PDF (.pdf)"],["txt","TXT (.txt)"],["png","PNG (.png)"],["jpg","JPG (.jpg)"]],
+    video: [["mp3","MP3 (.mp3)"],["wav","WAV (.wav)"]]
   };
   const toolPresets = {
     image: { title: "Image Converter", subtitle: "Convert images to the format you need.", accept: "image/*,.jpg,.jpeg,.png,.webp,.heic,.avif,.svg", categories: { image: targetFormats.image } },
@@ -59,7 +61,7 @@
     const hasPair = routeFrom && routeTo;
     const pairLabel = hasPair ? `${formatName(routeFrom)} to ${formatName(routeTo)}` : "";
     const title = hasPair ? `Convert ${pairLabel} Online — Convertivo` : "Convertivo — Fast, Free & Private Online File Converter";
-    const description = hasPair ? `Convert ${formatName(routeFrom)} files to ${formatName(routeTo)} instantly in your browser with Convertivo. 100% private, client-side conversion. No uploads required.` : "Convertivo is a fast, free and private online file converter for images, documents and audio directly in your browser.";
+    const description = hasPair ? `Convert ${formatName(routeFrom)} files to ${formatName(routeTo)} instantly in your browser with Convertivo. 100% private, client-side conversion. No uploads required.` : "Convertivo is a fast, free and private online file converter for images, documents, audio and video directly in your browser.";
     document.title = title;
     $('meta[name="description"]').setAttribute("content", description);
     $('meta[property="og:title"]').setAttribute("content", title);
@@ -93,7 +95,7 @@
     updateRouteMetadata();
   };
   const ext = (name) => name.toLowerCase().match(/\.([a-z0-9]+)$/)?.[1] || "";
-  const groupFor = (name) => documentInputs.includes(ext(name)) ? "document" : audioInputs.includes(ext(name)) || ext(name) === "webm" ? "audio" : "image";
+  const groupFor = (name) => documentInputs.includes(ext(name)) ? "document" : videoInputs.includes(ext(name)) ? "video" : audioInputs.includes(ext(name)) ? "audio" : "image";
   const normalizedExt = (name) => ext(name) === "jpeg" ? "jpg" : ext(name);
   const size = (value) => value < 1024 ? `${value} B` : value < 1048576 ? `${(value / 1024).toFixed(1)} KB` : `${(value / 1048576).toFixed(1)} MB`;
   const setProgress = (value, message) => { $("#progress-bar").style.width = `${value}%`; $("#progress-value").textContent = `${value}%`; $("#progress-message").textContent = message; };
@@ -106,7 +108,7 @@
     const sourceGroup = groupFor(file.name);
     const optionsByCategory = sourceGroup === "image" || sourceGroup === "document"
       ? { document: targetFormats.document.filter(([value]) => ["docx", "pdf", "txt"].includes(value)), image: targetFormats.image }
-      : { audio: targetFormats.audio };
+      : sourceGroup === "video" ? { audio: targetFormats.video } : { audio: targetFormats.audio };
     const rendered = Object.entries(optionsByCategory).map(([category, entries]) => [category, entries.filter(([value]) => value !== sourceExt)]).filter(([, entries]) => entries.length);
     renderFormats(rendered);
     renderTargetPicker(rendered);
@@ -283,8 +285,25 @@
     }
     return new Blob([pages.join("\n\n")], { type: "text/plain" });
   }
+  let ffmpegInstance = null;
+  async function transcodeMedia(target) {
+    if (!window.FFmpegWASM || !window.FFmpegUtil) throw new Error("Media conversion is unavailable in this browser.");
+    if (!ffmpegInstance) {
+      ffmpegInstance = new window.FFmpegWASM.FFmpeg();
+      ffmpegInstance.on("progress", ({ progress }) => setProgress(20 + Math.round(progress * 65), "Transcoding media in your browser..."));
+      const core = "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd";
+      await ffmpegInstance.load({ coreURL: `${core}/ffmpeg-core.js`, wasmURL: `${core}/ffmpeg-core.wasm` });
+    }
+    const inputName = `input.${ext(file.name)}`;
+    const outputNameForTarget = `output.${target}`;
+    await ffmpegInstance.writeFile(inputName, await window.FFmpegUtil.fetchFile(file));
+    await ffmpegInstance.exec(["-i", inputName, ...(target === "mp3" ? ["-vn", "-codec:a", "libmp3lame"] : ["-vn", "-codec:a", "pcm_s16le"]), outputNameForTarget]);
+    const data = await ffmpegInstance.readFile(outputNameForTarget);
+    return new Blob([data], { type: target === "mp3" ? "audio/mpeg" : "audio/wav" });
+  }
   async function mediaBlob(target) {
-    const mime = { mp3: "audio/mpeg", wav: "audio/wav", aac: "audio/aac", ogg: "audio/ogg", m4a: "audio/mp4", flac: "audio/flac", webm: "video/webm" }[target] || file.type || "application/octet-stream";
+    if (["mp3", "wav"].includes(target)) return transcodeMedia(target);
+    const mime = { aac: "audio/aac", ogg: "audio/ogg", m4a: "audio/mp4", flac: "audio/flac", webm: "video/webm" }[target] || file.type || "application/octet-stream";
     return new Blob([await file.arrayBuffer()], { type: mime });
   }
   async function convert() {
@@ -295,7 +314,7 @@
         file = currentFile;
         setProgress(48, `Converting ${currentFile.name}...`);
         const sourceGroup = groupFor(file.name);
-        const blob = sourceGroup === "image" ? (target === "pdf" ? await pdfBlob() : await imageBlob(target)) : sourceGroup === "document" && ext(file.name) === "pdf" ? (target === "txt" ? await pdfTextBlob() : await pdfImageBlob(target)) : sourceGroup === "audio" ? await mediaBlob(target) : new Blob([await file.arrayBuffer()], { type: "text/plain" });
+        const blob = sourceGroup === "image" ? (target === "pdf" ? await pdfBlob() : await imageBlob(target)) : sourceGroup === "document" && ext(file.name) === "pdf" ? (target === "txt" ? await pdfTextBlob() : await pdfImageBlob(target)) : sourceGroup === "audio" || sourceGroup === "video" ? await mediaBlob(target) : new Blob([await file.arrayBuffer()], { type: "text/plain" });
         outputs.push({ blob, name: `${file.name.replace(/\.[^.]+$/,"")}.${target}` });
       }
       let blob = outputs[0].blob;

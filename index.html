@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Convertivo is a fast, free and private online file converter for images, documents and audio directly in your browser.">
+  <meta name="description" content="Convertivo is a fast, free and private online file converter for images, documents, audio and video directly in your browser.">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="LrYQmGVhcLNHpQTaWi9VNTGM_eqva3tjVQg7hI_ntlU">
   <meta property="og:title" content="Convertivo — Fast, Free &amp; Private Online File Converter">
-  <meta property="og:description" content="Convert images, documents and audio quickly in your browser with Convertivo. No uploads required.">
+  <meta property="og:description" content="Convert images, documents, audio and video quickly in your browser with Convertivo. No uploads required.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://universal-file-converter-app.vercel.app/">
-  <meta property="og:image" content="https://universal-file-converter-app.vercel.app/og-image.svg">
+  <meta property="og:url" content="https://convertivo.app/">
+  <meta property="og:image" content="https://convertivo.app/og-image.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Convertivo — Fast, Free &amp; Private Online File Converter">
-  <meta name="twitter:description" content="Convert images, documents and audio privately in your browser with Convertivo. No uploads required.">
-  <meta name="twitter:image" content="https://universal-file-converter-app.vercel.app/og-image.svg">
-  <link rel="canonical" href="https://universal-file-converter-app.vercel.app/">
+  <meta name="twitter:description" content="Convert images, documents, audio and video privately in your browser with Convertivo. No uploads required.">
+  <meta name="twitter:image" content="https://convertivo.app/og-image.svg">
+  <link rel="canonical" href="https://convertivo.app/">
   <title>Convertivo — Fast, Free &amp; Private Online File Converter</title>
   <link rel="stylesheet" href="style.css">
   <script id="structured-data" type="application/ld+json">{
@@ -23,10 +23,10 @@
     "@graph":[
       {
         "@type":"WebApplication",
-        "@id":"https://universal-file-converter-app.vercel.app/#application",
+        "@id":"https://convertivo.app/#application",
         "name":"Convertivo",
-        "url":"https://universal-file-converter-app.vercel.app/",
-        "description":"Convertivo provides fast, free and private client-side conversion for images, documents, audio and more.",
+        "url":"https://convertivo.app/",
+        "description":"Convertivo provides fast, free and private client-side conversion for images, documents, audio, video and more.",
         "applicationCategory":"UtilitiesApplication",
         "operatingSystem":"Any",
         "browserRequirements":"Requires a modern browser with JavaScript enabled.",
@@ -35,7 +35,7 @@
       },
       {
         "@type":"FAQPage",
-        "@id":"https://universal-file-converter-app.vercel.app/#faq",
+        "@id":"https://convertivo.app/#faq",
         "mainEntity":[
           {"@type":"Question","name":"Is my data safe?","acceptedAnswer":{"@type":"Answer","text":"Yes. Conversion runs locally in your browser, and your files are never uploaded or stored on our servers."}},
           {"@type":"Question","name":"Which file formats are supported?","acceptedAnswer":{"@type":"Answer","text":"Supported formats include JPG, PNG, WEBP, HEIC, AVIF, SVG, PDF, DOCX, TXT, MP3, WAV, AAC, FLAC, OGG, M4A, MP4 and WEBM."}},
@@ -47,6 +47,8 @@
   <script src="https://accounts.google.com/gsi/client"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script id="dropboxjs" data-app-key="YOUR_DROPBOX_APP_KEY" src="https://www.dropbox.com/static/api/2/dropins.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js" defer crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js" defer crossorigin="anonymous"></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -82,7 +84,7 @@
         <div id="format-pair-badge" class="format-pair-badge" hidden></div>
         <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Choose a file to convert or drop it here">
           <div class="upload-icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></div><h3>Drop your file here</h3><p>or click to browse any file</p>
-          <button id="browse-btn" class="secondary-btn" type="button" aria-label="Choose files to convert">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.webm" hidden>
+          <button id="browse-btn" class="secondary-btn" type="button" aria-label="Choose files to convert">Choose files</button><input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.svg,.bmp,.gif,.ico,.tif,.tiff,.pdf,.docx,.txt,.mp3,.wav,.aac,.ogg,.m4a,.flac,.mp4,.webm" hidden>
         </div>
         <div class="cloud-import-group">
           <button id="drive-btn" type="button" aria-label="Import a file from Google Drive">
