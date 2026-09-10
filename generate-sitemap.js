@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const BASE_URL = "https://convertivo.app";
+const BASE_URL = "https://convertivo.vercel.app";
 const formats = ["jpg", "png", "webp", "heic", "pdf", "txt", "mp3", "wav", "mp4"];
 const lastmod = new Date().toISOString().slice(0, 10);
 const xmlEscape = (value) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
