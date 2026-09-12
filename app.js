@@ -9,7 +9,7 @@
   const CLOUD_BUTTONS_ENABLED = true;
   const ADSENSE_ENABLED = false;
   const GOOGLE_SCOPE = "https://www.googleapis.com/auth/drive.readonly";
-  const SITE_ORIGIN = "https://convertivo.app";
+  const SITE_ORIGIN = "https://convertivo.vercel.app";
   let configuredGoogleClientId = localStorage.getItem("googleDriveClientId") || GOOGLE_CLIENT_ID;
   let configuredDropboxAppKey = localStorage.getItem("dropboxAppKey") || DROPBOX_APP_KEY;
   let googleTokenClient = null, googleAccessToken = "";
@@ -60,7 +60,7 @@
   const updateRouteMetadata = () => {
     const hasPair = routeFrom && routeTo;
     const pairLabel = hasPair ? `${formatName(routeFrom)} to ${formatName(routeTo)}` : "";
-    const title = hasPair ? `Convert ${pairLabel} Online — Convertivo` : "Convertivo — Fast, Free & Private Online File Converter";
+    const title = hasPair ? `Convert ${pairLabel} Online — Convertivo` : "Convertivo - Free & Private In-Browser File Converter";
     const description = hasPair ? `Convert ${formatName(routeFrom)} files to ${formatName(routeTo)} instantly in your browser with Convertivo. 100% private, client-side conversion. No uploads required.` : "Convertivo is a fast, free and private online file converter for images, documents, audio and video directly in your browser.";
     document.title = title;
     $('meta[name="description"]').setAttribute("content", description);
