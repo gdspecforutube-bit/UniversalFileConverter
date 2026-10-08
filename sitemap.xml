@@ -2,440 +2,194 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://convertivo.vercel.app/</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/converters</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/jpg-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/jpg-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/jpg-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/jpg-to-avif</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/jpg-to-svg</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/jpg-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/jpg-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/jpg-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/jpg-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/jpg-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/png-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/png-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/png-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/png-to-avif</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/png-to-svg</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/png-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/png-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/png-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/png-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/png-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/webp-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/webp-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/webp-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/webp-to-avif</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/webp-to-svg</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/webp-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/webp-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/avif-to-jpg</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/webp-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/avif-to-png</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/webp-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/avif-to-webp</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/webp-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/avif-to-svg</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/avif-to-pdf</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/svg-to-jpg</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/svg-to-png</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/svg-to-webp</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/svg-to-avif</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/svg-to-pdf</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/bmp-to-jpg</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/heic-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/bmp-to-png</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/bmp-to-webp</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/bmp-to-avif</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/bmp-to-svg</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/bmp-to-pdf</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/gif-to-jpg</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/gif-to-png</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/gif-to-webp</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/gif-to-avif</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/gif-to-svg</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/gif-to-pdf</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/ico-to-jpg</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/ico-to-png</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/ico-to-webp</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/ico-to-avif</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/ico-to-svg</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/ico-to-pdf</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/pdf-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/pdf-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/pdf-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/pdf-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/pdf-to-avif</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/pdf-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/pdf-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/pdf-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/pdf-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/txt-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/mp3-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/mp3-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/mp3-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/mp3-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/mp3-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/mp3-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/mp3-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/mp3-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/wav-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/wav-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/wav-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/wav-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/wav-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/wav-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/wav-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/wav-to-mp4</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/aac-to-mp3</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/mp4-to-jpg</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/aac-to-wav</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/mp4-to-png</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/ogg-to-mp3</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/mp4-to-webp</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/ogg-to-wav</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/mp4-to-heic</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/m4a-to-mp3</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/mp4-to-pdf</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/m4a-to-wav</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/mp4-to-txt</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://convertivo.vercel.app/flac-to-mp3</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/flac-to-wav</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/mp4-to-mp3</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/mp4-to-wav</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/webm-to-mp3</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/webm-to-wav</loc>
   </url>
 </urlset>

@@ -54,8 +54,8 @@
   };
   let file = null, files = [], outputBlob = null, outputName = "", compressMode = false, preferredTarget = "";
   let routeFrom = "", routeTo = "";
-  const routeFormats = { image: ["jpg", "png", "webp", "heic", "gif", "svg"], document: ["pdf", "txt"], media: ["mp3", "wav", "mp4"] };
-  const allRouteFormats = Object.values(routeFormats).flat();
+  const converterRoutes = window.CONVERTER_ROUTES;
+  const validRoutePairs = new Set(converterRoutes.map(({ from, to }) => `${from}-to-${to}`));
   const formatName = (value) => value.toUpperCase();
   const updateRouteMetadata = () => {
     const hasPair = routeFrom && routeTo;
@@ -88,8 +88,9 @@
     const pathPair = location.pathname.match(/\/([a-z0-9]+)-to-([a-z0-9]+)\/?$/i);
     const from = (params.get("from") || pathPair?.[1] || "").toLowerCase();
     const to = (params.get("to") || pathPair?.[2] || "").toLowerCase();
-    routeFrom = allRouteFormats.includes(from) ? from : "";
-    routeTo = allRouteFormats.includes(to) ? to : "";
+    const validPair = validRoutePairs.has(`${from}-to-${to}`);
+    routeFrom = validPair ? from : "";
+    routeTo = validPair ? to : "";
     preferredTarget = routeTo;
     if (routeFrom) input.accept = `.${routeFrom}`;
     updateRouteMetadata();
