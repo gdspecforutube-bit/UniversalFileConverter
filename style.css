@@ -63,7 +63,6 @@ dialog .primary-btn:hover{background:#1d4ed8}
 .landing-card h2{margin:34px 0 8px;color:#fff;font-size:1.25rem}
 .landing-card p:not(.eyebrow){max-width:620px;color:#cbd5e1;font-size:1rem;line-height:1.75}
 .landing-cta{display:inline-flex;width:auto;margin-top:16px;padding:12px 18px;text-decoration:none}
-.adsense-slot{display:flex;max-width:680px;height:90px;align-items:center;justify-content:center;margin:24px auto;color:#64748b;border:1px dashed rgba(255,255,255,.12);border-radius:10px;background:#0f141e;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}.adsense-rail{height:120px}
 .drop-zone.dragging{transform:scale(1.015);box-shadow:0 0 28px rgba(59,130,246,.28)}
 .conversion-spinner{display:block;width:20px;height:20px;margin:14px auto 0;border:2px solid rgba(255,255,255,.18);border-top-color:#3b82f6;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .toast{position:fixed;right:22px;bottom:22px;z-index:1100;max-width:360px;padding:13px 16px;border:1px solid rgba(255,255,255,.1);border-radius:9px;color:#e5e7eb;background:#111827;box-shadow:0 12px 30px rgba(0,0,0,.35)}
