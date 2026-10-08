@@ -24,7 +24,7 @@ const renderConverterPage = (route) => {
   const description = `Convert ${from} files to ${to} in your browser. Choose a local file and download the converted result.`;
   const url = pageUrl(route.slug);
   const relatedLinks = relatedRoutes(route)
-    .map((relatedRoute) => `<a href="/${escapeHtml(relatedRoute.slug)}">${escapeHtml(`${formatName(relatedRoute.from)} to ${formatName(relatedRoute.to)}`)}</a>`)
+    .map((relatedRoute) => `<a href="/${escapeHtml(relatedRoute.slug)}"><span>${escapeHtml(`${formatName(relatedRoute.from)} → ${formatName(relatedRoute.to)}`)}</span><span aria-hidden="true">↗</span></a>`)
     .join("\n        ");
   const relatedSection = relatedLinks
     ? `<section class="related-converters" aria-labelledby="related-converters-title">
@@ -69,15 +69,15 @@ const renderConverterPage = (route) => {
     <section class="converter-hero" aria-labelledby="converter-title">
       <p class="eyebrow">${escapeHtml(route.category)} converter</p>
       <h1 id="converter-title">${from} to ${to} Converter</h1>
-      <p class="converter-lead">Convert ${from} files to ${to} quickly and privately in your browser.</p>
-      <a class="primary-btn converter-cta" href="/?from=${route.from}&amp;to=${route.to}">
-        Convert ${from} to ${to}
-        <span aria-hidden="true">→</span>
-      </a>
-      <p class="converter-privacy">Choose a file, convert it, and download the result. Your files stay on your device.</p>
+      <p class="converter-lead">Convert ${from} files to ${to} in a few simple steps.</p>
+      <section class="converter-tool-panel" aria-label="Start ${from} to ${to} conversion">
+        <p class="tool-panel-prompt">Choose a ${from} file from your device</p>
+        <a class="primary-btn converter-cta" href="/?from=${route.from}&amp;to=${route.to}">Convert ${from} to ${to}</a>
+        <p class="converter-privacy">Your file is processed locally and stays on your device.</p>
+      </section>
     </section>
     <section class="converter-details" aria-label="About this converter">
-      <p>Convertivo processes your ${from} file locally in your browser and creates a ${to} download. No software installation is needed.</p>
+      <p>Convertivo turns your ${from} file into a ${to} download directly in your browser. No software installation is needed.</p>
       ${relatedSection}
       <a class="all-converters-link" href="/converters">Browse all converters <span aria-hidden="true">→</span></a>
     </section>
@@ -125,7 +125,7 @@ const renderConverterIndex = () => {
         <span class="brand-mark" aria-hidden="true">⇄</span>
         <strong>Convertivo</strong>
       </a>
-      <nav class="header-nav" aria-label="Main navigation"><a href="/">Home</a></nav>
+      <nav class="header-nav" aria-label="Main navigation"><a href="/converters">All converters</a></nav>
     </header>
     <article class="converter-directory-content">
       <p class="eyebrow">Convertivo tools</p>
