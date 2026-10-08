@@ -20,29 +20,40 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <main class="page landing-page">
+  <main class="page landing-page converter-landing">
     <header class="site-header">
-      <a class="nav-logo" href="/" aria-label="Convertivo home"><strong>Convertivo</strong></a>
+      <a class="nav-logo" href="/" aria-label="Convertivo home">
+        <span class="brand-mark" aria-hidden="true">⇄</span>
+        <strong>Convertivo</strong>
+      </a>
       <nav class="header-nav" aria-label="Main navigation">
         <a href="/converters">All converters</a>
-        <a href="/?from=gif&amp;to=pdf">Open converter</a>
       </nav>
     </header>
-    <article class="landing-card">
-      <p class="eyebrow">Image conversion</p>
-      <h1>GIF to PDF Converter</h1>
-      <p>Convert GIF files to PDF directly in your browser. Choose a local file, confirm the output format, and download the converted result.</p>
-      <p>Your file is processed on your device and is not uploaded to Convertivo.</p>
-      <a class="primary-btn landing-cta" href="/?from=gif&amp;to=pdf">Start GIF to PDF conversion</a>
-      <section aria-labelledby="related-converters"><h2 id="related-converters">More image converters</h2><ul>
-        <li><a href="/gif-to-jpg">GIF to JPG</a></li>
-        <li><a href="/gif-to-png">GIF to PNG</a></li>
-        <li><a href="/gif-to-webp">GIF to WEBP</a></li>
-        <li><a href="/gif-to-avif">GIF to AVIF</a></li>
-        <li><a href="/gif-to-svg">GIF to SVG</a></li>
-      </ul></section>
-      <p><a href="/converters">Browse all converters</a></p>
-    </article>
+    <section class="converter-hero" aria-labelledby="converter-title">
+      <p class="eyebrow">Image converter</p>
+      <h1 id="converter-title">GIF to PDF Converter</h1>
+      <p class="converter-lead">Convert GIF files to PDF quickly and privately in your browser.</p>
+      <a class="primary-btn converter-cta" href="/?from=gif&amp;to=pdf">
+        Convert GIF to PDF
+        <span aria-hidden="true">→</span>
+      </a>
+      <p class="converter-privacy">Choose a file, convert it, and download the result. Your files stay on your device.</p>
+    </section>
+    <section class="converter-details" aria-label="About this converter">
+      <p>Convertivo processes your GIF file locally in your browser and creates a PDF download. No software installation is needed.</p>
+      <section class="related-converters" aria-labelledby="related-converters-title">
+        <h2 id="related-converters-title">More image converters</h2>
+        <nav class="related-converter-links" aria-label="Related converters">
+        <a href="/gif-to-jpg">GIF to JPG</a>
+        <a href="/gif-to-png">GIF to PNG</a>
+        <a href="/gif-to-webp">GIF to WEBP</a>
+        <a href="/gif-to-avif">GIF to AVIF</a>
+        <a href="/gif-to-svg">GIF to SVG</a>
+        </nav>
+      </section>
+      <a class="all-converters-link" href="/converters">Browse all converters <span aria-hidden="true">→</span></a>
+    </section>
   </main>
 </body>
 </html>

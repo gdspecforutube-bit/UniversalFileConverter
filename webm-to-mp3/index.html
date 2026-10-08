@@ -20,25 +20,36 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <main class="page landing-page">
+  <main class="page landing-page converter-landing">
     <header class="site-header">
-      <a class="nav-logo" href="/" aria-label="Convertivo home"><strong>Convertivo</strong></a>
+      <a class="nav-logo" href="/" aria-label="Convertivo home">
+        <span class="brand-mark" aria-hidden="true">⇄</span>
+        <strong>Convertivo</strong>
+      </a>
       <nav class="header-nav" aria-label="Main navigation">
         <a href="/converters">All converters</a>
-        <a href="/?from=webm&amp;to=mp3">Open converter</a>
       </nav>
     </header>
-    <article class="landing-card">
-      <p class="eyebrow">Video conversion</p>
-      <h1>WEBM to MP3 Converter</h1>
-      <p>Convert WEBM files to MP3 directly in your browser. Choose a local file, confirm the output format, and download the converted result.</p>
-      <p>Your file is processed on your device and is not uploaded to Convertivo.</p>
-      <a class="primary-btn landing-cta" href="/?from=webm&amp;to=mp3">Start WEBM to MP3 conversion</a>
-      <section aria-labelledby="related-converters"><h2 id="related-converters">More video converters</h2><ul>
-        <li><a href="/webm-to-wav">WEBM to WAV</a></li>
-      </ul></section>
-      <p><a href="/converters">Browse all converters</a></p>
-    </article>
+    <section class="converter-hero" aria-labelledby="converter-title">
+      <p class="eyebrow">Video converter</p>
+      <h1 id="converter-title">WEBM to MP3 Converter</h1>
+      <p class="converter-lead">Convert WEBM files to MP3 quickly and privately in your browser.</p>
+      <a class="primary-btn converter-cta" href="/?from=webm&amp;to=mp3">
+        Convert WEBM to MP3
+        <span aria-hidden="true">→</span>
+      </a>
+      <p class="converter-privacy">Choose a file, convert it, and download the result. Your files stay on your device.</p>
+    </section>
+    <section class="converter-details" aria-label="About this converter">
+      <p>Convertivo processes your WEBM file locally in your browser and creates a MP3 download. No software installation is needed.</p>
+      <section class="related-converters" aria-labelledby="related-converters-title">
+        <h2 id="related-converters-title">More video converters</h2>
+        <nav class="related-converter-links" aria-label="Related converters">
+        <a href="/webm-to-wav">WEBM to WAV</a>
+        </nav>
+      </section>
+      <a class="all-converters-link" href="/converters">Browse all converters <span aria-hidden="true">→</span></a>
+    </section>
   </main>
 </body>
 </html>

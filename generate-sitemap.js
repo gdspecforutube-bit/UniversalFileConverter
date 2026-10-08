@@ -24,10 +24,14 @@ const renderConverterPage = (route) => {
   const description = `Convert ${from} files to ${to} in your browser. Choose a local file and download the converted result.`;
   const url = pageUrl(route.slug);
   const relatedLinks = relatedRoutes(route)
-    .map((relatedRoute) => htmlLink(relatedRoute))
+    .map((relatedRoute) => `<a href="/${escapeHtml(relatedRoute.slug)}">${escapeHtml(`${formatName(relatedRoute.from)} to ${formatName(relatedRoute.to)}`)}</a>`)
     .join("\n        ");
   const relatedSection = relatedLinks
-    ? `<section aria-labelledby="related-converters"><h2 id="related-converters">More ${escapeHtml(route.category.toLowerCase())} converters</h2><ul>\n        ${relatedLinks}\n      </ul></section>`
+    ? `<section class="related-converters" aria-labelledby="related-converters-title">
+        <h2 id="related-converters-title">More ${escapeHtml(route.category.toLowerCase())} converters</h2>
+        <nav class="related-converter-links" aria-label="Related converters">\n        ${relatedLinks}
+        </nav>
+      </section>`
     : "";
 
   return `<!doctype html>
@@ -52,23 +56,31 @@ const renderConverterPage = (route) => {
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <main class="page landing-page">
+  <main class="page landing-page converter-landing">
     <header class="site-header">
-      <a class="nav-logo" href="/" aria-label="Convertivo home"><strong>Convertivo</strong></a>
+      <a class="nav-logo" href="/" aria-label="Convertivo home">
+        <span class="brand-mark" aria-hidden="true">⇄</span>
+        <strong>Convertivo</strong>
+      </a>
       <nav class="header-nav" aria-label="Main navigation">
         <a href="/converters">All converters</a>
-        <a href="/?from=${route.from}&amp;to=${route.to}">Open converter</a>
       </nav>
     </header>
-    <article class="landing-card">
-      <p class="eyebrow">${escapeHtml(route.category)} conversion</p>
-      <h1>${from} to ${to} Converter</h1>
-      <p>Convert ${from} files to ${to} directly in your browser. Choose a local file, confirm the output format, and download the converted result.</p>
-      <p>Your file is processed on your device and is not uploaded to Convertivo.</p>
-      <a class="primary-btn landing-cta" href="/?from=${route.from}&amp;to=${route.to}">Start ${from} to ${to} conversion</a>
+    <section class="converter-hero" aria-labelledby="converter-title">
+      <p class="eyebrow">${escapeHtml(route.category)} converter</p>
+      <h1 id="converter-title">${from} to ${to} Converter</h1>
+      <p class="converter-lead">Convert ${from} files to ${to} quickly and privately in your browser.</p>
+      <a class="primary-btn converter-cta" href="/?from=${route.from}&amp;to=${route.to}">
+        Convert ${from} to ${to}
+        <span aria-hidden="true">→</span>
+      </a>
+      <p class="converter-privacy">Choose a file, convert it, and download the result. Your files stay on your device.</p>
+    </section>
+    <section class="converter-details" aria-label="About this converter">
+      <p>Convertivo processes your ${from} file locally in your browser and creates a ${to} download. No software installation is needed.</p>
       ${relatedSection}
-      <p><a href="/converters">Browse all converters</a></p>
-    </article>
+      <a class="all-converters-link" href="/converters">Browse all converters <span aria-hidden="true">→</span></a>
+    </section>
   </main>
 </body>
 </html>
@@ -107,12 +119,15 @@ const renderConverterIndex = () => {
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <main class="page landing-page">
+  <main class="page landing-page converter-landing converter-directory">
     <header class="site-header">
-      <a class="nav-logo" href="/" aria-label="Convertivo home"><strong>Convertivo</strong></a>
+      <a class="nav-logo" href="/" aria-label="Convertivo home">
+        <span class="brand-mark" aria-hidden="true">⇄</span>
+        <strong>Convertivo</strong>
+      </a>
       <nav class="header-nav" aria-label="Main navigation"><a href="/">Home</a></nav>
     </header>
-    <article class="landing-card">
+    <article class="converter-directory-content">
       <p class="eyebrow">Convertivo tools</p>
       <h1>All file converters</h1>
       <p>Choose a conversion to open its details and start the browser-based converter.</p>
