@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>All File Converters | Convertivo</title>
-  <meta name="description" content="Browse the image, document, audio, and video conversions available in Convertivo.">
+  <meta name="description" content="Find available image, PDF, audio, and video conversions in Convertivo. Search formats and choose a tool.">
   <meta name="robots" content="index, follow">
   <meta property="og:site_name" content="Convertivo">
   <meta property="og:type" content="website">
   <meta property="og:title" content="All File Converters | Convertivo">
-  <meta property="og:description" content="Browse the image, document, audio, and video conversions available in Convertivo.">
+  <meta property="og:description" content="Find available image, PDF, audio, and video conversions in Convertivo. Search formats and choose a tool.">
   <meta property="og:url" content="https://convertivo.vercel.app/converters">
   <meta property="og:image" content="https://convertivo.vercel.app/og-image.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="All File Converters | Convertivo">
-  <meta name="twitter:description" content="Browse the image, document, audio, and video conversions available in Convertivo.">
+  <meta name="twitter:description" content="Find available image, PDF, audio, and video conversions in Convertivo. Search formats and choose a tool.">
   <meta name="twitter:image" content="https://convertivo.vercel.app/og-image.svg">
   <link rel="canonical" href="https://convertivo.vercel.app/converters">
   <link rel="stylesheet" href="/style.css">
@@ -29,92 +29,103 @@
       <nav class="header-nav" aria-label="Main navigation"><a href="/converters">All converters</a></nav>
     </header>
     <article class="converter-directory-content">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">All converters</span></nav>
       <p class="eyebrow">Convertivo tools</p>
       <h1>All file converters</h1>
-      <p>Choose a conversion to open its details and start the browser-based converter.</p>
+      <p>Search supported formats, then choose a converter to get started.</p>
+      <label class="converter-search" for="converter-search">Search converters
+        <input id="converter-search" type="search" placeholder="Try JPG to PNG" autocomplete="off">
+      </label>
+      <p id="converter-search-status" class="converter-search-status" role="status" aria-live="polite">51 converters</p>
       <section aria-labelledby="converters-image">
       <h2 id="converters-image">Image converters</h2>
       <ul>
-        <li><a href="/jpg-to-png">JPG to PNG</a></li>
-        <li><a href="/jpg-to-webp">JPG to WEBP</a></li>
-        <li><a href="/jpg-to-avif">JPG to AVIF</a></li>
-        <li><a href="/jpg-to-svg">JPG to SVG</a></li>
-        <li><a href="/jpg-to-pdf">JPG to PDF</a></li>
-        <li><a href="/png-to-jpg">PNG to JPG</a></li>
-        <li><a href="/png-to-webp">PNG to WEBP</a></li>
-        <li><a href="/png-to-avif">PNG to AVIF</a></li>
-        <li><a href="/png-to-svg">PNG to SVG</a></li>
-        <li><a href="/png-to-pdf">PNG to PDF</a></li>
-        <li><a href="/webp-to-jpg">WEBP to JPG</a></li>
-        <li><a href="/webp-to-png">WEBP to PNG</a></li>
-        <li><a href="/webp-to-avif">WEBP to AVIF</a></li>
-        <li><a href="/webp-to-svg">WEBP to SVG</a></li>
-        <li><a href="/webp-to-pdf">WEBP to PDF</a></li>
-        <li><a href="/avif-to-jpg">AVIF to JPG</a></li>
-        <li><a href="/avif-to-png">AVIF to PNG</a></li>
-        <li><a href="/avif-to-webp">AVIF to WEBP</a></li>
-        <li><a href="/avif-to-svg">AVIF to SVG</a></li>
-        <li><a href="/avif-to-pdf">AVIF to PDF</a></li>
-        <li><a href="/svg-to-jpg">SVG to JPG</a></li>
-        <li><a href="/svg-to-png">SVG to PNG</a></li>
-        <li><a href="/svg-to-webp">SVG to WEBP</a></li>
-        <li><a href="/svg-to-avif">SVG to AVIF</a></li>
-        <li><a href="/svg-to-pdf">SVG to PDF</a></li>
-        <li><a href="/bmp-to-jpg">BMP to JPG</a></li>
-        <li><a href="/bmp-to-png">BMP to PNG</a></li>
-        <li><a href="/bmp-to-webp">BMP to WEBP</a></li>
-        <li><a href="/bmp-to-avif">BMP to AVIF</a></li>
-        <li><a href="/bmp-to-svg">BMP to SVG</a></li>
-        <li><a href="/bmp-to-pdf">BMP to PDF</a></li>
-        <li><a href="/gif-to-jpg">GIF to JPG</a></li>
-        <li><a href="/gif-to-png">GIF to PNG</a></li>
-        <li><a href="/gif-to-webp">GIF to WEBP</a></li>
-        <li><a href="/gif-to-avif">GIF to AVIF</a></li>
-        <li><a href="/gif-to-svg">GIF to SVG</a></li>
-        <li><a href="/gif-to-pdf">GIF to PDF</a></li>
-        <li><a href="/ico-to-jpg">ICO to JPG</a></li>
-        <li><a href="/ico-to-png">ICO to PNG</a></li>
-        <li><a href="/ico-to-webp">ICO to WEBP</a></li>
-        <li><a href="/ico-to-avif">ICO to AVIF</a></li>
-        <li><a href="/ico-to-svg">ICO to SVG</a></li>
-        <li><a href="/ico-to-pdf">ICO to PDF</a></li>
+        <li data-converter-item><a href="/jpg-to-png">JPG to PNG</a></li>
+        <li data-converter-item><a href="/jpg-to-webp">JPG to WEBP</a></li>
+        <li data-converter-item><a href="/jpg-to-pdf">JPG to PDF</a></li>
+        <li data-converter-item><a href="/png-to-jpg">PNG to JPG</a></li>
+        <li data-converter-item><a href="/png-to-webp">PNG to WEBP</a></li>
+        <li data-converter-item><a href="/png-to-pdf">PNG to PDF</a></li>
+        <li data-converter-item><a href="/webp-to-jpg">WEBP to JPG</a></li>
+        <li data-converter-item><a href="/webp-to-png">WEBP to PNG</a></li>
+        <li data-converter-item><a href="/webp-to-pdf">WEBP to PDF</a></li>
+        <li data-converter-item><a href="/avif-to-jpg">AVIF to JPG</a></li>
+        <li data-converter-item><a href="/avif-to-png">AVIF to PNG</a></li>
+        <li data-converter-item><a href="/avif-to-webp">AVIF to WEBP</a></li>
+        <li data-converter-item><a href="/avif-to-pdf">AVIF to PDF</a></li>
+        <li data-converter-item><a href="/svg-to-jpg">SVG to JPG</a></li>
+        <li data-converter-item><a href="/svg-to-png">SVG to PNG</a></li>
+        <li data-converter-item><a href="/svg-to-webp">SVG to WEBP</a></li>
+        <li data-converter-item><a href="/svg-to-pdf">SVG to PDF</a></li>
+        <li data-converter-item><a href="/bmp-to-jpg">BMP to JPG</a></li>
+        <li data-converter-item><a href="/bmp-to-png">BMP to PNG</a></li>
+        <li data-converter-item><a href="/bmp-to-webp">BMP to WEBP</a></li>
+        <li data-converter-item><a href="/bmp-to-pdf">BMP to PDF</a></li>
+        <li data-converter-item><a href="/gif-to-jpg">GIF to JPG</a></li>
+        <li data-converter-item><a href="/gif-to-png">GIF to PNG</a></li>
+        <li data-converter-item><a href="/gif-to-webp">GIF to WEBP</a></li>
+        <li data-converter-item><a href="/gif-to-pdf">GIF to PDF</a></li>
+        <li data-converter-item><a href="/ico-to-jpg">ICO to JPG</a></li>
+        <li data-converter-item><a href="/ico-to-png">ICO to PNG</a></li>
+        <li data-converter-item><a href="/ico-to-webp">ICO to WEBP</a></li>
+        <li data-converter-item><a href="/ico-to-pdf">ICO to PDF</a></li>
+        <li data-converter-item><a href="/heic-to-jpg">HEIC to JPG</a></li>
+        <li data-converter-item><a href="/heic-to-png">HEIC to PNG</a></li>
+        <li data-converter-item><a href="/heic-to-webp">HEIC to WEBP</a></li>
+        <li data-converter-item><a href="/heic-to-pdf">HEIC to PDF</a></li>
       </ul>
     </section>
     <section aria-labelledby="converters-document">
       <h2 id="converters-document">Document converters</h2>
       <ul>
-        <li><a href="/pdf-to-jpg">PDF to JPG</a></li>
-        <li><a href="/pdf-to-png">PDF to PNG</a></li>
-        <li><a href="/pdf-to-webp">PDF to WEBP</a></li>
-        <li><a href="/pdf-to-avif">PDF to AVIF</a></li>
-        <li><a href="/pdf-to-txt">PDF to TXT</a></li>
+        <li data-converter-item><a href="/pdf-to-jpg">PDF to JPG</a></li>
+        <li data-converter-item><a href="/pdf-to-png">PDF to PNG</a></li>
+        <li data-converter-item><a href="/pdf-to-webp">PDF to WEBP</a></li>
+        <li data-converter-item><a href="/pdf-to-txt">PDF to TXT</a></li>
       </ul>
     </section>
     <section aria-labelledby="converters-audio">
       <h2 id="converters-audio">Audio converters</h2>
       <ul>
-        <li><a href="/mp3-to-wav">MP3 to WAV</a></li>
-        <li><a href="/wav-to-mp3">WAV to MP3</a></li>
-        <li><a href="/aac-to-mp3">AAC to MP3</a></li>
-        <li><a href="/aac-to-wav">AAC to WAV</a></li>
-        <li><a href="/ogg-to-mp3">OGG to MP3</a></li>
-        <li><a href="/ogg-to-wav">OGG to WAV</a></li>
-        <li><a href="/m4a-to-mp3">M4A to MP3</a></li>
-        <li><a href="/m4a-to-wav">M4A to WAV</a></li>
-        <li><a href="/flac-to-mp3">FLAC to MP3</a></li>
-        <li><a href="/flac-to-wav">FLAC to WAV</a></li>
+        <li data-converter-item><a href="/mp3-to-wav">MP3 to WAV</a></li>
+        <li data-converter-item><a href="/wav-to-mp3">WAV to MP3</a></li>
+        <li data-converter-item><a href="/aac-to-mp3">AAC to MP3</a></li>
+        <li data-converter-item><a href="/aac-to-wav">AAC to WAV</a></li>
+        <li data-converter-item><a href="/ogg-to-mp3">OGG to MP3</a></li>
+        <li data-converter-item><a href="/ogg-to-wav">OGG to WAV</a></li>
+        <li data-converter-item><a href="/m4a-to-mp3">M4A to MP3</a></li>
+        <li data-converter-item><a href="/m4a-to-wav">M4A to WAV</a></li>
+        <li data-converter-item><a href="/flac-to-mp3">FLAC to MP3</a></li>
+        <li data-converter-item><a href="/flac-to-wav">FLAC to WAV</a></li>
       </ul>
     </section>
     <section aria-labelledby="converters-video">
       <h2 id="converters-video">Video converters</h2>
       <ul>
-        <li><a href="/mp4-to-mp3">MP4 to MP3</a></li>
-        <li><a href="/mp4-to-wav">MP4 to WAV</a></li>
-        <li><a href="/webm-to-mp3">WEBM to MP3</a></li>
-        <li><a href="/webm-to-wav">WEBM to WAV</a></li>
+        <li data-converter-item><a href="/mp4-to-mp3">MP4 to MP3</a></li>
+        <li data-converter-item><a href="/mp4-to-wav">MP4 to WAV</a></li>
+        <li data-converter-item><a href="/webm-to-mp3">WEBM to MP3</a></li>
+        <li data-converter-item><a href="/webm-to-wav">WEBM to WAV</a></li>
       </ul>
     </section>
     </article>
   </main>
+  <script>
+    const search = document.querySelector("#converter-search");
+    const items = [...document.querySelectorAll("[data-converter-item]")];
+    const sections = [...document.querySelectorAll(".converter-directory-content section")];
+    const status = document.querySelector("#converter-search-status");
+    search.addEventListener("input", () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      for (const item of items) {
+        const matches = item.textContent.toLowerCase().includes(query);
+        item.hidden = !matches;
+        if (matches) visible += 1;
+      }
+      for (const section of sections) section.hidden = !section.querySelector("[data-converter-item]:not([hidden])");
+      status.textContent = query ? `${visible} ${visible === 1 ? "converter" : "converters"} found` : `${visible} converters`;
+    });
+  </script>
 </body>
 </html>

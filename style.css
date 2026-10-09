@@ -351,3 +351,84 @@ body{background:var(--page);color:var(--ink);font-family:Inter,-apple-system,Bli
 }
 .developer-docs{width:min(680px,100%);min-width:0}
 .developer-docs pre{max-width:100%;overflow-x:auto}
+.home-hero{max-width:760px;margin:0 auto;padding:58px 20px 32px;text-align:center}
+.page:not(.converter-landing)>.site-header,.converter-landing>.site-header{justify-content:space-between}
+.home-hero .eyebrow{margin-bottom:12px;color:var(--muted);font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:none}
+.home-hero h1{margin:0;color:var(--ink);font-size:clamp(2rem,4.6vw,3rem);font-weight:650;letter-spacing:-.04em;line-height:1.12}
+.home-hero>p:last-child{max-width:620px;margin:16px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.65}
+.converter-card{max-width:760px;margin:0 auto;padding:30px}
+.drop-zone{background:#fbfcfd}
+.drop-zone h3{font-size:1.2rem;font-weight:600}
+.drop-zone p{font-size:.9rem}
+.upload-note{margin:14px 0 0;color:var(--muted);font-size:.8rem;text-align:center}
+.common-conversions,.how-it-works,.features-section,.faq-section{width:min(760px,100%);margin:36px auto 0}
+.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:18px}
+.section-heading h2,.how-it-works>h2,.features-section>h2,.faq-section>h2{margin:0;color:var(--ink);font-size:1.2rem;font-weight:620;letter-spacing:-.025em}
+.section-heading>a{color:var(--blue);font-size:.85rem;text-decoration:none}
+.section-heading>a:hover,.section-heading>a:focus-visible{color:var(--blue-dark);text-decoration:underline}
+.common-conversion-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;margin-top:12px}
+.common-conversion-links a{display:flex;min-width:0;min-height:46px;align-items:center;gap:9px;border-bottom:1px solid var(--line);color:#374151;font-size:.9rem;font-weight:550;text-decoration:none}
+.common-conversion-links a span{color:#9ca3af}
+.common-conversion-links a:hover,.common-conversion-links a:focus-visible{color:var(--blue);outline:0}
+.how-it-works{padding-top:26px;border-top:1px solid var(--line)}
+.how-it-works ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:20px 0 0;padding:0;list-style:none}
+.how-it-works li{display:flex;align-items:flex-start;gap:11px}
+.how-it-works li>span{display:grid;width:27px;height:27px;flex:0 0 27px;place-items:center;border:1px solid #dbeafe;border-radius:50%;color:var(--blue);font-size:.78rem;font-weight:600}
+.how-it-works li strong{font-size:.86rem;font-weight:600}
+.how-it-works li p{margin:4px 0 0;color:var(--muted);font-size:.81rem;line-height:1.5}
+.features-section{padding-top:26px;border-top:1px solid var(--line)}
+.features-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.feature-card{padding:16px 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none}
+.feature-card h3{margin:0;font-size:.88rem;font-weight:600}
+.feature-card p{margin:6px 0 0;color:var(--muted);font-size:.82rem;line-height:1.55}
+.faq-section{padding-top:26px;border-top:1px solid var(--line)}
+.faq-section details{border-bottom:1px solid var(--line)}
+.faq-section summary{padding:14px 0;color:#374151;font-size:.9rem;font-weight:550}
+.faq-section details p{margin:0;padding:0 0 14px;color:var(--muted);font-size:.84rem;line-height:1.6}
+.site-footer{width:min(1120px,100%);flex-wrap:wrap;justify-content:space-between;gap:14px 24px;margin:48px auto 0;padding:20px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
+.footer-brand{color:var(--ink);font-size:.95rem;font-weight:650;text-decoration:none}
+.footer-links{gap:18px}
+.site-footer a{color:#4b5563}
+.site-footer a:hover,.site-footer a:focus-visible{color:var(--blue)}
+.copyright{margin-left:auto}
+.breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0 0;color:#9ca3af;font-size:.78rem}
+.breadcrumbs a{color:#6b7280;text-decoration:none}
+.breadcrumbs a:hover,.breadcrumbs a:focus-visible{color:var(--blue);text-decoration:underline}
+.breadcrumbs [aria-current=page]{color:#4b5563}
+.converter-landing>.site-header{border-bottom-color:var(--line);background:#fff}
+.converter-process{padding:20px 0;border-top:1px solid var(--line)}
+.converter-process h2{margin:0 0 10px;color:#374151;font-size:.9rem;font-weight:600}
+.converter-process ol{display:flex;flex-wrap:wrap;gap:10px 30px;margin:0;padding-left:20px;color:#6b7280;font-size:.86rem}
+.converter-directory-content{margin-top:28px}
+.converter-directory-content .breadcrumbs{margin:0 0 28px}
+.converter-search{display:flex;max-width:520px;flex-direction:column;gap:7px;color:#374151;font-size:.84rem;font-weight:550}
+.converter-search input{width:100%;min-height:46px;padding:10px 13px;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:#fff;font:inherit;font-weight:400}
+.converter-search input:focus{border-color:#93b4f4;outline:3px solid #2563eb1a}
+.converter-search-status{min-height:20px;margin:8px 0 0!important;color:var(--muted);font-size:.78rem}
+.converter-directory-content section[hidden],.converter-directory-content section li[hidden]{display:none}
+.converter-directory-content section ul{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:28px}
+.converter-directory-content section li a{min-height:42px}
+.converter-directory-content section h2{margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line);color:#374151;font-size:1rem}
+@media(max-width:700px){
+  .home-hero{padding:42px 8px 28px}
+  .converter-card{padding:22px 18px}
+  .common-conversions,.how-it-works,.features-section,.faq-section{margin-top:30px}
+  .features-grid{grid-template-columns:1fr}
+  .feature-card{padding:13px 0}
+  .site-footer{justify-content:flex-start}
+  .footer-links{justify-content:flex-start;gap:10px 18px}
+  .copyright{width:100%;margin-left:0}
+  .converter-directory-content section ul{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:480px){
+  .home-hero{padding:34px 2px 24px}
+  .home-hero h1{font-size:clamp(1.9rem,9vw,2.4rem)}
+  .home-hero>p:last-child{font-size:.96rem}
+  .converter-card{padding:18px 14px}
+  .common-conversion-links{column-gap:18px}
+  .common-conversion-links a{min-height:44px;font-size:.84rem}
+  .how-it-works ol{grid-template-columns:1fr;gap:15px}
+  .converter-tool-panel{padding:22px 16px}
+  .converter-process ol{flex-direction:column;gap:8px}
+  .converter-directory-content section ul{grid-template-columns:1fr}
+}

@@ -13,12 +13,6 @@
     <loc>https://convertivo.vercel.app/jpg-to-webp</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/jpg-to-avif</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/jpg-to-svg</loc>
-  </url>
-  <url>
     <loc>https://convertivo.vercel.app/jpg-to-pdf</loc>
   </url>
   <url>
@@ -28,12 +22,6 @@
     <loc>https://convertivo.vercel.app/png-to-webp</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/png-to-avif</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/png-to-svg</loc>
-  </url>
-  <url>
     <loc>https://convertivo.vercel.app/png-to-pdf</loc>
   </url>
   <url>
@@ -41,12 +29,6 @@
   </url>
   <url>
     <loc>https://convertivo.vercel.app/webp-to-png</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/webp-to-avif</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/webp-to-svg</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/webp-to-pdf</loc>
@@ -61,9 +43,6 @@
     <loc>https://convertivo.vercel.app/avif-to-webp</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/avif-to-svg</loc>
-  </url>
-  <url>
     <loc>https://convertivo.vercel.app/avif-to-pdf</loc>
   </url>
   <url>
@@ -74,9 +53,6 @@
   </url>
   <url>
     <loc>https://convertivo.vercel.app/svg-to-webp</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/svg-to-avif</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/svg-to-pdf</loc>
@@ -91,12 +67,6 @@
     <loc>https://convertivo.vercel.app/bmp-to-webp</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/bmp-to-avif</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/bmp-to-svg</loc>
-  </url>
-  <url>
     <loc>https://convertivo.vercel.app/bmp-to-pdf</loc>
   </url>
   <url>
@@ -107,12 +77,6 @@
   </url>
   <url>
     <loc>https://convertivo.vercel.app/gif-to-webp</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/gif-to-avif</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/gif-to-svg</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/gif-to-pdf</loc>
@@ -127,13 +91,19 @@
     <loc>https://convertivo.vercel.app/ico-to-webp</loc>
   </url>
   <url>
-    <loc>https://convertivo.vercel.app/ico-to-avif</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/ico-to-svg</loc>
-  </url>
-  <url>
     <loc>https://convertivo.vercel.app/ico-to-pdf</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/heic-to-jpg</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/heic-to-png</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/heic-to-webp</loc>
+  </url>
+  <url>
+    <loc>https://convertivo.vercel.app/heic-to-pdf</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/pdf-to-jpg</loc>
@@ -143,9 +113,6 @@
   </url>
   <url>
     <loc>https://convertivo.vercel.app/pdf-to-webp</loc>
-  </url>
-  <url>
-    <loc>https://convertivo.vercel.app/pdf-to-avif</loc>
   </url>
   <url>
     <loc>https://convertivo.vercel.app/pdf-to-txt</loc>

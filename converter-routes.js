@@ -1,13 +1,13 @@
 const converterRouteGroups = [
   {
     category: "Image",
-    sources: ["jpg", "png", "webp", "avif", "svg", "bmp", "gif", "ico"],
-    targets: ["jpg", "png", "webp", "avif", "svg", "pdf"]
+    sources: ["jpg", "png", "webp", "avif", "svg", "bmp", "gif", "ico", "heic"],
+    targets: ["jpg", "png", "webp", "pdf"]
   },
   {
     category: "Document",
     sources: ["pdf"],
-    targets: ["jpg", "png", "webp", "avif", "txt"]
+    targets: ["jpg", "png", "webp", "txt"]
   },
   {
     category: "Audio",

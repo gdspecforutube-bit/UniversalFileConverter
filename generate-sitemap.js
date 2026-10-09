@@ -14,14 +14,29 @@ const previousRouteSlugs = new Set(
     .map(([, slug]) => slug)
 );
 const htmlLink = (route, text = `${formatName(route.from)} to ${formatName(route.to)}`) =>
-  `<li><a href="/${escapeHtml(route.slug)}">${escapeHtml(text)}</a></li>`;
+  `<li data-converter-item><a href="/${escapeHtml(route.slug)}">${escapeHtml(text)}</a></li>`;
 const relatedRoutes = (route) => converterRoutes.filter((candidate) => candidate.from === route.from && candidate.slug !== route.slug);
+const conversionDescription = (route) => {
+  const from = formatName(route.from);
+  const to = formatName(route.to);
+  if (route.category === "Document") {
+    return route.to === "txt"
+      ? "Extract selectable text from every page of a PDF into a plain text file."
+      : `Export the first page of a PDF as a ${to} image.`;
+  }
+  if (route.category === "Audio") return `Transcode ${from} audio to ${to} in your browser.`;
+  if (route.category === "Video") return `Extract the audio track from ${from} and save it as ${to}.`;
+  if (route.to === "pdf") return `Place this ${from} image on a page in a PDF document.`;
+  if (route.to === "jpg") return `Convert this ${from} image to JPG. Transparent areas are filled with white.`;
+  return `Convert this ${from} image to ${to}.`;
+};
 
 const renderConverterPage = (route) => {
   const from = formatName(route.from);
   const to = formatName(route.to);
   const title = `${from} to ${to} Converter | Convertivo`;
-  const description = `Convert ${from} files to ${to} in your browser. Choose a local file and download the converted result.`;
+  const conversionSummary = conversionDescription(route);
+  const description = `${conversionSummary} Choose a local file and download the result.`;
   const url = pageUrl(route.slug);
   const relatedLinks = relatedRoutes(route)
     .map((relatedRoute) => `<a href="/${escapeHtml(relatedRoute.slug)}"><span>${escapeHtml(`${formatName(relatedRoute.from)} → ${formatName(relatedRoute.to)}`)}</span><span aria-hidden="true">↗</span></a>`)
@@ -66,18 +81,28 @@ const renderConverterPage = (route) => {
         <a href="/converters">All converters</a>
       </nav>
     </header>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a><span aria-hidden="true">/</span><a href="/converters">All converters</a><span aria-hidden="true">/</span><span aria-current="page">${from} to ${to}</span>
+    </nav>
     <section class="converter-hero" aria-labelledby="converter-title">
       <p class="eyebrow">${escapeHtml(route.category)} converter</p>
       <h1 id="converter-title">${from} to ${to} Converter</h1>
-      <p class="converter-lead">Convert ${from} files to ${to} in a few simple steps.</p>
+      <p class="converter-lead">${escapeHtml(conversionSummary)}</p>
       <section class="converter-tool-panel" aria-label="Start ${from} to ${to} conversion">
-        <p class="tool-panel-prompt">Choose a ${from} file from your device</p>
+        <p class="tool-panel-prompt">Choose a local ${from} file</p>
         <a class="primary-btn converter-cta" href="/?from=${route.from}&amp;to=${route.to}">Convert ${from} to ${to}</a>
-        <p class="converter-privacy">Your file is processed locally and stays on your device.</p>
+        <p class="converter-privacy">Your file is processed in your browser and is not uploaded to Convertivo.</p>
       </section>
     </section>
     <section class="converter-details" aria-label="About this converter">
-      <p>Convertivo turns your ${from} file into a ${to} download directly in your browser. No software installation is needed.</p>
+      <section class="converter-process" aria-labelledby="how-it-works-title">
+        <h2 id="how-it-works-title">How it works</h2>
+        <ol>
+          <li>Choose a ${from} file from your device.</li>
+          <li>Convert it in your browser.</li>
+          <li>Download the ${to} result.</li>
+        </ol>
+      </section>
       ${relatedSection}
       <a class="all-converters-link" href="/converters">Browse all converters <span aria-hidden="true">→</span></a>
     </section>
@@ -103,17 +128,17 @@ const renderConverterIndex = () => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>All File Converters | Convertivo</title>
-  <meta name="description" content="Browse the image, document, audio, and video conversions available in Convertivo.">
+  <meta name="description" content="Find available image, PDF, audio, and video conversions in Convertivo. Search formats and choose a tool.">
   <meta name="robots" content="index, follow">
   <meta property="og:site_name" content="Convertivo">
   <meta property="og:type" content="website">
   <meta property="og:title" content="All File Converters | Convertivo">
-  <meta property="og:description" content="Browse the image, document, audio, and video conversions available in Convertivo.">
+  <meta property="og:description" content="Find available image, PDF, audio, and video conversions in Convertivo. Search formats and choose a tool.">
   <meta property="og:url" content="${BASE_URL}/converters">
   <meta property="og:image" content="${BASE_URL}/og-image.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="All File Converters | Convertivo">
-  <meta name="twitter:description" content="Browse the image, document, audio, and video conversions available in Convertivo.">
+  <meta name="twitter:description" content="Find available image, PDF, audio, and video conversions in Convertivo. Search formats and choose a tool.">
   <meta name="twitter:image" content="${BASE_URL}/og-image.svg">
   <link rel="canonical" href="${BASE_URL}/converters">
   <link rel="stylesheet" href="/style.css">
@@ -128,12 +153,34 @@ const renderConverterIndex = () => {
       <nav class="header-nav" aria-label="Main navigation"><a href="/converters">All converters</a></nav>
     </header>
     <article class="converter-directory-content">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">All converters</span></nav>
       <p class="eyebrow">Convertivo tools</p>
       <h1>All file converters</h1>
-      <p>Choose a conversion to open its details and start the browser-based converter.</p>
+      <p>Search supported formats, then choose a converter to get started.</p>
+      <label class="converter-search" for="converter-search">Search converters
+        <input id="converter-search" type="search" placeholder="Try JPG to PNG" autocomplete="off">
+      </label>
+      <p id="converter-search-status" class="converter-search-status" role="status" aria-live="polite">${converterRoutes.length} converters</p>
       ${categories}
     </article>
   </main>
+  <script>
+    const search = document.querySelector("#converter-search");
+    const items = [...document.querySelectorAll("[data-converter-item]")];
+    const sections = [...document.querySelectorAll(".converter-directory-content section")];
+    const status = document.querySelector("#converter-search-status");
+    search.addEventListener("input", () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      for (const item of items) {
+        const matches = item.textContent.toLowerCase().includes(query);
+        item.hidden = !matches;
+        if (matches) visible += 1;
+      }
+      for (const section of sections) section.hidden = !section.querySelector("[data-converter-item]:not([hidden])");
+      status.textContent = query ? \`\${visible} \${visible === 1 ? "converter" : "converters"} found\` : \`\${visible} converters\`;
+    });
+  </script>
 </body>
 </html>
 `;

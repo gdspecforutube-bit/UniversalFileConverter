@@ -2,66 +2,48 @@
   "use strict";
   const $ = (selector) => document.querySelector(selector);
   const input = $("#file-input");
-  const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID";
-  const GOOGLE_DEVELOPER_KEY = "YOUR_GOOGLE_DEVELOPER_KEY";
-  const DROPBOX_APP_KEY = "YOUR_DROPBOX_APP_KEY";
-  // Set to false while credentials are being configured to disable cloud buttons.
-  const CLOUD_BUTTONS_ENABLED = true;
-  const ADSENSE_ENABLED = false;
-  const GOOGLE_SCOPE = "https://www.googleapis.com/auth/drive.readonly";
   const SITE_ORIGIN = "https://convertivo.vercel.app";
-  let configuredGoogleClientId = localStorage.getItem("googleDriveClientId") || GOOGLE_CLIENT_ID;
-  let configuredDropboxAppKey = localStorage.getItem("dropboxAppKey") || DROPBOX_APP_KEY;
-  let googleTokenClient = null, googleAccessToken = "";
-  let conversionDependencies = null;
-  const loadScript = (src) => new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = resolve;
-    script.onerror = () => reject(new Error(`Could not load conversion library: ${src}`));
-    document.head.append(script);
-  });
-  const ensureConversionDependencies = () => conversionDependencies || (conversionDependencies = Promise.all([
-    loadScript("https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"),
-    loadScript("https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"),
-    loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"),
-    loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js")
-  ]).then(() => {
+  const scriptPromises = new Map();
+  const loadScript = (src) => {
+    if (scriptPromises.has(src)) return scriptPromises.get(src);
+    const promise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.crossOrigin = "anonymous";
+      script.onload = resolve;
+      script.onerror = () => {
+        scriptPromises.delete(src);
+        reject(new Error(`Could not load conversion library: ${src}`));
+      };
+      document.head.append(script);
+    });
+    scriptPromises.set(src, promise);
+    return promise;
+  };
+  const ensurePdfJs = async () => {
+    if (!window.pdfjsLib) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js");
     window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-  }));
-  document.documentElement.dataset.adsense = ADSENSE_ENABLED ? "enabled" : "placeholder";
-  const imageInputs = ["jpg","jpeg","png","webp","heic","avif","svg","bmp","gif","ico","tif","tiff"];
+  };
+  const imageInputs = ["jpg","jpeg","png","webp","heic","avif","svg","bmp","gif","ico"];
   const audioInputs = ["mp3","wav","aac","ogg","m4a","flac"];
   const videoInputs = ["mp4","webm"];
-  const documentInputs = ["pdf","docx","txt"];
+  const documentInputs = ["pdf"];
   const supportedInputs = [...imageInputs, ...documentInputs, ...audioInputs, ...videoInputs];
-  const mimeByExtension = { pdf: ["application/pdf"], docx: ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"], png: ["image/png"], jpg: ["image/jpeg"], jpeg: ["image/jpeg"], webp: ["image/webp"], heic: ["image/heic","image/heif"], avif: ["image/avif"], svg: ["image/svg+xml","image/svg"], bmp: ["image/bmp"], gif: ["image/gif"], ico: ["image/x-icon","image/vnd.microsoft.icon"], tif: ["image/tiff"], tiff: ["image/tiff"], txt: ["text/plain"], mp3: ["audio/mpeg","audio/mp3"], wav: ["audio/wav","audio/x-wav"], aac: ["audio/aac","audio/x-aac"], ogg: ["audio/ogg"], m4a: ["audio/mp4","audio/x-m4a"], flac: ["audio/flac","audio/x-flac"], mp4: ["video/mp4"], webm: ["video/webm","audio/webm"] };
-  const targetFormats = {
-    image: [["png","PNG (.png)"],["jpg","JPG (.jpg)"],["webp","WEBP (.webp)"],["avif","AVIF (.avif)"],["svg","SVG (.svg)"]],
-    audio: [["mp3","MP3 (.mp3)"],["wav","WAV (.wav)"],["ogg","OGG (.ogg)"],["m4a","M4A (.m4a)"],["flac","FLAC (.flac)"]],
-    document: [["docx","Word (.docx)"],["pdf","PDF (.pdf)"],["txt","TXT (.txt)"],["png","PNG (.png)"],["jpg","JPG (.jpg)"]],
-    video: [["mp3","MP3 (.mp3)"],["wav","WAV (.wav)"]]
-  };
-  const toolPresets = {
-    image: { title: "Image Converter", subtitle: "Convert images to the format you need.", accept: "image/*,.jpg,.jpeg,.png,.webp,.heic,.avif,.svg", categories: { image: targetFormats.image } },
-    document: { title: "Document Converter", subtitle: "Convert documents locally and securely.", accept: ".pdf,.docx,.xlsx,.pptx,.txt", categories: { document: targetFormats.document.filter(([value]) => ["docx", "pdf", "txt"].includes(value)), image: targetFormats.document.filter(([value]) => ["png", "jpg"].includes(value)) } },
-    audio: { title: "Audio Converter", subtitle: "Reduce audio file size or change format.", accept: "audio/*,.mp3,.wav,.aac,.flac,.ogg,.m4a", categories: { audio: targetFormats.audio } },
-    video: { title: "Video Converter", subtitle: "Convert video files locally in your browser.", accept: "video/*,.mp4,.webm,.mov,.avi,.mkv", categories: { video: [["mp4", "MP4 (.mp4)"], ["webm", "WEBM (.webm)"], ["mov", "MOV (.mov)"], ["avi", "AVI (.avi)"], ["mkv", "MKV (.mkv)"]] } },
-    compress: { title: "Compress Files", subtitle: "Reduce file size without uploading your files.", accept: ".pdf,.png,.jpg,.jpeg", categories: { image: targetFormats.image, document: [["pdf", "PDF (.pdf)"]] } },
-    pdf: { title: "Merge PDF", subtitle: "Combine documents locally into one PDF.", accept: ".pdf,.docx,.xlsx,.pptx,.txt", categories: { document: [["pdf", "PDF (.pdf)"]] } },
-    archive: { title: "Archive Converter", subtitle: "Convert archive files locally and securely.", accept: ".zip,.rar,.7z,.tar.gz", categories: { archive: [["zip", "ZIP (.zip)"], ["rar", "RAR (.rar)"], ["7z", "7Z (.7z)"], ["tar.gz", "TAR.GZ (.tar.gz)"]] } },
-    font: { title: "Font Converter", subtitle: "Convert font files in your browser.", accept: ".ttf,.otf,.woff,.woff2", categories: { font: [["ttf", "TTF (.ttf)"], ["otf", "OTF (.otf)"], ["woff", "WOFF (.woff)"], ["woff2", "WOFF2 (.woff2)"]] } }
-  };
-  let file = null, files = [], outputBlob = null, outputName = "", compressMode = false, preferredTarget = "";
+  const mimeByExtension = { pdf: ["application/pdf"], png: ["image/png"], jpg: ["image/jpeg"], jpeg: ["image/jpeg"], webp: ["image/webp"], heic: ["image/heic","image/heif"], avif: ["image/avif"], svg: ["image/svg+xml","image/svg"], bmp: ["image/bmp"], gif: ["image/gif"], ico: ["image/x-icon","image/vnd.microsoft.icon"], mp3: ["audio/mpeg","audio/mp3"], wav: ["audio/wav","audio/x-wav"], aac: ["audio/aac","audio/x-aac"], ogg: ["audio/ogg"], m4a: ["audio/mp4","audio/x-m4a"], flac: ["audio/flac","audio/x-flac"], mp4: ["video/mp4"], webm: ["video/webm","audio/webm"] };
+  let file = null, files = [], outputBlob = null, outputName = "", preferredTarget = "";
   let routeFrom = "", routeTo = "";
   const converterRoutes = window.CONVERTER_ROUTES;
   const validRoutePairs = new Set(converterRoutes.map(({ from, to }) => `${from}-to-${to}`));
   const formatName = (value) => value.toUpperCase();
+  const routesForFile = (selectedFile) => {
+    const source = normalizedExt(selectedFile.name);
+    return converterRoutes.filter((route) => route.from === source);
+  };
   const updateRouteMetadata = () => {
     const hasPair = routeFrom && routeTo;
     const pairLabel = hasPair ? `${formatName(routeFrom)} to ${formatName(routeTo)}` : "";
-    const title = hasPair ? `Convert ${pairLabel} Online — Convertivo` : "Convertivo - Free & Private In-Browser File Converter";
-    const description = hasPair ? `Convert ${formatName(routeFrom)} files to ${formatName(routeTo)} instantly in your browser with Convertivo. 100% private, client-side conversion. No uploads required.` : "Convertivo is a fast, free and private online file converter for images, documents, audio and video directly in your browser.";
+    const title = hasPair ? `${pairLabel} Converter | Convertivo` : "Convert Files in Your Browser | Convertivo";
+    const description = hasPair ? `Convert ${formatName(routeFrom)} to ${formatName(routeTo)} in your browser. Your selected file is processed on your device.` : "Convert supported image, PDF, audio and video files in your browser. Choose a file, select an available format and download the result.";
     document.title = title;
     $('meta[name="description"]').setAttribute("content", description);
     $('meta[property="og:title"]').setAttribute("content", title);
@@ -105,12 +87,15 @@
   const validateFile = async (candidate) => new Promise((resolve) => { const worker = validationWorker; const done = (event) => { worker.removeEventListener("message", done); resolve(event.data === true); }; worker.addEventListener("message", done); candidate.slice(0, 4096).arrayBuffer().then((buffer) => worker.postMessage({ extension: ext(candidate.name), buffer }, [buffer])); });
   const showStep = (step) => { ["upload","convert","result"].forEach((name) => { const view = $(`#step-${name}`); const active = name === step; view.hidden = !active; view.classList.toggle("active", active); }); $$(".step-indicator span").forEach((node, index) => node.classList.toggle("active", index === ["upload","convert","result"].indexOf(step))); };
   function populateFormats() {
-    const sourceExt = normalizedExt(file.name);
-    const sourceGroup = groupFor(file.name);
-    const optionsByCategory = sourceGroup === "image" || sourceGroup === "document"
-      ? { document: targetFormats.document.filter(([value]) => ["docx", "pdf", "txt"].includes(value)), image: targetFormats.image }
-      : sourceGroup === "video" ? { audio: targetFormats.video } : { audio: targetFormats.audio };
-    const rendered = Object.entries(optionsByCategory).map(([category, entries]) => [category, entries.filter(([value]) => value !== sourceExt)]).filter(([, entries]) => entries.length);
+    const commonTargets = files
+      .map((selectedFile) => new Set(routesForFile(selectedFile).map(({ to }) => to)))
+      .reduce((common, targets) => new Set([...common].filter((target) => targets.has(target))));
+    const optionsByCategory = {};
+    for (const target of commonTargets) {
+      const category = ["pdf", "txt"].includes(target) ? "document" : ["mp3", "wav"].includes(target) ? "audio" : "image";
+      (optionsByCategory[category] ||= []).push([target, `${formatName(target)} (.${target})`]);
+    }
+    const rendered = Object.entries(optionsByCategory);
     renderFormats(rendered);
     renderTargetPicker(rendered);
     const targetOption = rendered.flatMap(([, entries]) => entries).find(([value]) => value === preferredTarget);
@@ -198,6 +183,13 @@
     const valid = [];
     for (const candidate of selected) if (await validateFile(candidate)) valid.push(candidate);
     if (!valid.length) { showToast("The selected file could not be validated."); return; }
+    const commonTargets = valid
+      .map((candidate) => new Set(routesForFile(candidate).map(({ to }) => to)))
+      .reduce((common, targets) => new Set([...common].filter((target) => targets.has(target))));
+    if (!commonTargets.size) {
+      showToast("The selected files do not share a supported output format. Convert them separately.");
+      return;
+    }
     files = valid;
     file = files[0];
     $("#file-name").textContent = file.name;
@@ -207,9 +199,6 @@
     openTargetPicker();
   }
   function reset() { file = null; files = []; outputBlob = null; outputName = ""; input.value = ""; $("#success-card").hidden = true; $("#download-btn").hidden = true; $("#download-btn").removeAttribute("href"); $("#progress-bar").style.width = "0%"; $("#progress-value").textContent = "0%"; $("#result-title").textContent = "Converting your file..."; setProgress(0, "Preparing your conversion..."); showStep("upload"); }
-  function setMode(mode) {
-    compressMode = mode === "compress";
-  }
   async function sourceBlob() {
     if (ext(file.name) === "svg") {
       const markup = await file.text();
@@ -217,6 +206,7 @@
       return new Blob([markup], { type: "image/svg+xml" });
     }
     if (ext(file.name) !== "heic") return file;
+    if (!window.heic2any) await loadScript("https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js");
     const decoded = await heic2any({ blob: file, toType: "image/jpeg" });
     return Array.isArray(decoded) ? decoded[0] : decoded;
   }
@@ -233,7 +223,15 @@
     }
   }
   function canvasBlob(canvas, type, quality = .92) {
-    return new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("The selected image format could not be generated.")), type, quality));
+    return new Promise((resolve, reject) => canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error("The selected image format could not be generated."));
+      } else if (blob.type !== type) {
+        reject(new Error(`Your browser cannot create ${type.replace("image/", "").toUpperCase()} files.`));
+      } else {
+        resolve(blob);
+      }
+    }, type, quality));
   }
   async function imageBlob(target) {
     const { image } = await loadImage();
@@ -244,14 +242,11 @@
     const context = canvas.getContext("2d");
     if (["jpg", "jpeg"].includes(target)) { context.fillStyle = "#fff"; context.fillRect(0, 0, canvas.width, canvas.height); }
     context.drawImage(image, 0, 0);
-    if (target === "svg") {
-      const dataUrl = canvas.toDataURL("image/png");
-      return new Blob([`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${canvas.width}" height="${canvas.height}" viewBox="0 0 ${canvas.width} ${canvas.height}"><image x="0" y="0" width="100%" height="100%" xlink:href="${dataUrl}" href="${dataUrl}"/></svg>`], { type: "image/svg+xml" });
-    }
     const mime = target === "jpg" ? "image/jpeg" : target === "png" ? "image/png" : target === "webp" ? "image/webp" : target === "avif" ? "image/avif" : "image/png";
     return canvasBlob(canvas, mime, Number($("#quality-range").value) / 100);
   }
   async function pdfBlob() {
+    if (!window.PDFLib) await loadScript("https://unpkg.com/pdf-lib/dist/pdf-lib.min.js");
     const { image } = await loadImage();
     const canvas = window.document.createElement("canvas");
     canvas.width = image.naturalWidth;
@@ -265,6 +260,7 @@
     return new Blob([await pdf.save()], { type: "application/pdf" });
   }
   async function pdfImageBlob(target) {
+    await ensurePdfJs();
     const pdfDocument = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
     const page = await pdfDocument.getPage(1);
     const viewport = page.getViewport({ scale: 2 });
@@ -276,6 +272,7 @@
     return canvasBlob(canvas, mime, Number($("#quality-range").value) / 100);
   }
   async function pdfTextBlob() {
+    await ensurePdfJs();
     const pdfDocument = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
     const lastPage = $("#page-range").value === "first" ? 1 : pdfDocument.numPages;
     const pages = [];
@@ -288,6 +285,8 @@
   }
   let ffmpegInstance = null;
   async function transcodeMedia(target) {
+    if (!window.FFmpegWASM) await loadScript("https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js");
+    if (!window.FFmpegUtil) await loadScript("https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js");
     if (!window.FFmpegWASM || !window.FFmpegUtil) throw new Error("Media conversion is unavailable in this browser.");
     if (!ffmpegInstance) {
       ffmpegInstance = new window.FFmpegWASM.FFmpeg();
@@ -303,24 +302,38 @@
     return new Blob([data], { type: target === "mp3" ? "audio/mpeg" : "audio/wav" });
   }
   async function mediaBlob(target) {
-    if (["mp3", "wav"].includes(target)) return transcodeMedia(target);
-    const mime = { aac: "audio/aac", ogg: "audio/ogg", m4a: "audio/mp4", flac: "audio/flac", webm: "video/webm" }[target] || file.type || "application/octet-stream";
-    return new Blob([await file.arrayBuffer()], { type: mime });
+    if (!["mp3", "wav"].includes(target)) throw new Error(`Conversion to ${formatName(target)} is not supported.`);
+    return transcodeMedia(target);
   }
   async function convert() {
     const target=$("#format-trigger").dataset.value; showStep("result"); $("#result-title").textContent = "Converting your file..."; $("#success-card").hidden = true; $("#download-btn").hidden = true; setProgress(12,"Reading source file...");
     $("#conversion-spinner").hidden = false;
-    try { await ensureConversionDependencies(); await new Promise((resolve) => setTimeout(resolve,180)); const outputs = [];
+    try {
+      if (!files.every((selectedFile) => routesForFile(selectedFile).some((route) => route.to === target))) {
+        throw new Error(`Conversion to ${formatName(target)} is not supported for every selected file.`);
+      }
+      await new Promise((resolve) => setTimeout(resolve,180));
+      const outputs = [];
       for (const currentFile of files) {
         file = currentFile;
         setProgress(48, `Converting ${currentFile.name}...`);
         const sourceGroup = groupFor(file.name);
-        const blob = sourceGroup === "image" ? (target === "pdf" ? await pdfBlob() : await imageBlob(target)) : sourceGroup === "document" && ext(file.name) === "pdf" ? (target === "txt" ? await pdfTextBlob() : await pdfImageBlob(target)) : sourceGroup === "audio" || sourceGroup === "video" ? await mediaBlob(target) : new Blob([await file.arrayBuffer()], { type: "text/plain" });
+        let blob;
+        if (sourceGroup === "image") {
+          blob = target === "pdf" ? await pdfBlob() : await imageBlob(target);
+        } else if (sourceGroup === "document" && ext(file.name) === "pdf") {
+          blob = target === "txt" ? await pdfTextBlob() : await pdfImageBlob(target);
+        } else if (sourceGroup === "audio" || sourceGroup === "video") {
+          blob = await mediaBlob(target);
+        } else {
+          throw new Error(`Conversion from ${formatName(normalizedExt(file.name))} is not supported.`);
+        }
         outputs.push({ blob, name: `${file.name.replace(/\.[^.]+$/,"")}.${target}` });
       }
       let blob = outputs[0].blob;
       outputName = outputs[0].name;
       if (outputs.length > 1) {
+        if (!window.JSZip) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
         const zip = new JSZip();
         outputs.forEach((output) => zip.file(output.name, output.blob));
         blob = await zip.generateAsync({ type: "blob" });
@@ -354,103 +367,6 @@
   });
   $("#close-target-format").addEventListener("click", () => $("#target-format-modal").close());
   $("#target-format-modal").addEventListener("click", (event) => { if (event.target === $("#target-format-modal")) $("#target-format-modal").close(); });
-  const goConvert = () => { $("#tools-panel").hidden = true; setMode("convert"); reset(); document.querySelector(".converter-card").scrollIntoView({ behavior: "smooth", block: "start" }); };
-  $("#convert-nav").addEventListener("click", goConvert);
-  $("#compress-nav").addEventListener("click", () => { $("#tools-panel").hidden = true; setMode("compress"); document.querySelector(".converter-card").scrollIntoView({ behavior: "smooth", block: "start" }); });
-  $("#tools-nav").addEventListener("click", () => { const panel = $("#tools-panel"); panel.hidden = !panel.hidden; $("#tools-nav").setAttribute("aria-expanded", String(!panel.hidden)); });
-  const routeMenuItem = (button) => {
-    const route = button.dataset.tool;
-    const preset = toolPresets[route];
-    if (!preset) return;
-    $("#tools-panel").hidden = true;
-    $("#tools-nav").setAttribute("aria-expanded", "false");
-    preferredTarget = route === "pdf" || route === "document" ? "pdf" : route === "audio" ? "wav" : route === "image" ? "png" : "";
-    setMode(route === "compress" ? "compress" : "convert");
-    reset();
-    input.accept = preset.accept;
-    renderFormats(Object.entries(preset.categories));
-    document.querySelector(".converter-card").scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  $$("#tools-panel [data-tool]").forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); routeMenuItem(link); }));
-  $$("footer [data-tool]").forEach((button) => button.addEventListener("click", () => { setMode("compress"); reset(); document.querySelector(".converter-card").scrollIntoView({ behavior: "smooth", block: "start" }); }));
-  $("#api-nav").addEventListener("click", () => $("#developer-docs").scrollIntoView({ behavior: "smooth", block: "start" }));
-  const showCloudConfig = (provider, message) => {
-    $("#cloud-config-title").textContent = `${provider} import setup`;
-    $("#cloud-config-message").textContent = message;
-    $("#google-client-id").value = configuredGoogleClientId.startsWith("YOUR_") ? "" : configuredGoogleClientId;
-    $("#dropbox-app-key").value = configuredDropboxAppKey.startsWith("YOUR_") ? "" : configuredDropboxAppKey;
-    $("#cloud-config-modal").showModal();
-  };
-  const closeCloudConfig = () => {
-    const modal = $("#cloud-config-modal");
-    if (modal.open) modal.close();
-    $("#cloud-config-message").textContent = "";
-  };
-  const openLocalFilePicker = () => { closeCloudConfig(); input.click(); };
-  $("#close-cloud-config").addEventListener("click", closeCloudConfig);
-  $("#cloud-config-dismiss").addEventListener("click", closeCloudConfig);
-  $("#cloud-config-local").addEventListener("click", openLocalFilePicker);
-  $("#cloud-config-save").addEventListener("click", () => {
-    configuredGoogleClientId = $("#google-client-id").value.trim() || GOOGLE_CLIENT_ID;
-    configuredDropboxAppKey = $("#dropbox-app-key").value.trim() || DROPBOX_APP_KEY;
-    googleTokenClient = null;
-    googleAccessToken = "";
-    if (pickerConfigured(configuredGoogleClientId)) localStorage.setItem("googleDriveClientId", configuredGoogleClientId);
-    else localStorage.removeItem("googleDriveClientId");
-    if (pickerConfigured(configuredDropboxAppKey)) localStorage.setItem("dropboxAppKey", configuredDropboxAppKey);
-    else localStorage.removeItem("dropboxAppKey");
-    closeCloudConfig();
-  });
-  $("#cloud-config-modal").addEventListener("click", (event) => { if (event.target === $("#cloud-config-modal")) closeCloudConfig(); });
-  $("#cloud-config-modal").addEventListener("cancel", (event) => { event.preventDefault(); closeCloudConfig(); });
-  const pickerConfigured = (value) => value && !value.startsWith("YOUR_");
-  const loadGooglePicker = () => new Promise((resolve, reject) => {
-    if (!window.gapi) { reject(new Error("Google API client could not be loaded.")); return; }
-    window.gapi.load("picker", { callback: resolve, onerror: () => reject(new Error("Google Drive Picker could not be loaded.")) });
-  });
-  const importGoogleDriveFile = async (document) => {
-    const response = await fetch(document.downloadUrl, { headers: { Authorization: `Bearer ${googleAccessToken}` } });
-    if (!response.ok) throw new Error("Google Drive file could not be downloaded.");
-    const blob = await response.blob();
-    await selectFile([new File([blob], document.name, { type: blob.type || document.mimeType || "application/octet-stream" })]);
-  };
-  const openGoogleDrivePicker = async () => {
-    if (!pickerConfigured(configuredGoogleClientId) || !pickerConfigured(GOOGLE_DEVELOPER_KEY)) { showCloudConfig("Google Drive", "Google Drive import requires a configured OAuth client ID and developer key. You can continue by choosing a file from your device."); return; }
-    if (!window.google?.accounts?.oauth2) { showCloudConfig("Google Drive", "The Google Drive picker could not be loaded. You can continue by choosing a file from your device."); return; }
-    try {
-      await loadGooglePicker();
-      if (!googleTokenClient) googleTokenClient = window.google.accounts.oauth2.initTokenClient({ client_id: configuredGoogleClientId, scope: GOOGLE_SCOPE, callback: (response) => { googleAccessToken = response.access_token; } });
-      await new Promise((resolve, reject) => {
-        googleTokenClient.callback = (response) => response.error ? reject(new Error("Google Drive authorization was not granted.")) : (googleAccessToken = response.access_token, resolve());
-        googleTokenClient.requestAccessToken({ prompt: googleAccessToken ? "" : "consent" });
-      });
-      const picker = new window.google.picker.PickerBuilder().setDeveloperKey(GOOGLE_DEVELOPER_KEY).setOAuthToken(googleAccessToken).setCallback(async (data) => {
-        if (data.action !== window.google.picker.Action.PICKED) return;
-        try { await importGoogleDriveFile(data.docs[0]); } catch (error) { showCloudConfig("Google Drive", error.message); }
-      }).addView(window.google.picker.ViewId.DOCS).build();
-      picker.setVisible(true);
-    } catch (error) { showCloudConfig("Google Drive", error.message); }
-  };
-  const openDropboxChooser = () => {
-    if (!pickerConfigured(configuredDropboxAppKey)) { showCloudConfig("Dropbox", "Dropbox import requires a configured app key. You can continue by choosing a file from your device."); return; }
-    if (!window.Dropbox?.choose) { showCloudConfig("Dropbox", "The Dropbox chooser could not be loaded. You can continue by choosing a file from your device."); return; }
-    window.Dropbox.choose({ success: async (files) => {
-      const selected = files[0];
-      try {
-        const response = await fetch(selected.link);
-        if (!response.ok) throw new Error("Dropbox file could not be downloaded.");
-        const blob = await response.blob();
-        await selectFile([new File([blob], selected.name, { type: blob.type || "application/octet-stream" })]);
-      } catch (error) { showCloudConfig("Dropbox", error.message); }
-    }, cancel: () => {}, linkType: "direct", multiselect: false });
-  };
-  $("#drive-btn").addEventListener("click", openGoogleDrivePicker);
-  $("#dropbox-btn").addEventListener("click", openDropboxChooser);
-  [$("#drive-btn"), $("#dropbox-btn")].forEach((button) => {
-    button.disabled = !CLOUD_BUTTONS_ENABLED;
-    button.setAttribute("aria-disabled", String(!CLOUD_BUTTONS_ENABLED));
-    if (!CLOUD_BUTTONS_ENABLED) button.title = "Cloud imports are disabled until API credentials are configured.";
-  });
   const bindPolicyModal = (linkSelector, modalSelector, closeSelector) => {
     const modal = $(modalSelector);
     $(linkSelector).addEventListener("click", (event) => { event.preventDefault(); modal.showModal(); });
@@ -459,15 +375,6 @@
   };
   bindPolicyModal("#privacy-link", "#privacy-modal", "#close-privacy");
   bindPolicyModal("#terms-link", "#terms-modal", "#close-terms");
-  const setFooterPreset = (event, title, accept) => {
-    event.preventDefault();
-    setMode("convert");
-    reset();
-    input.accept = accept;
-    $("#drop-zone").scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-  $("#image-converter-link").addEventListener("click", (event) => setFooterPreset(event, "Image Converter", "image/*"));
-  $("#pdf-converter-link").addEventListener("click", (event) => setFooterPreset(event, "PDF Converter", ".pdf,application/pdf"));
   const bindModal = (link, modal, close) => { $(link).addEventListener("click", (event) => { event.preventDefault(); $(modal).showModal(); }); $(close).addEventListener("click", () => $(modal).close()); $(modal).addEventListener("click", (event) => { if (event.target === $(modal)) $(modal).close(); }); };
   bindModal("#impressum-link", "#impressum-modal", "#close-impressum");
   const impressum = {
@@ -482,23 +389,5 @@
     $("#impressum-contact").textContent = impressum.contact;
     $("#impressum-note").textContent = impressum.note;
   });
-  const cookieConsent = $("#cookie-consent");
-  const cookieConsentValue = localStorage.getItem("cookieConsent");
-  if (!cookieConsentValue) cookieConsent.hidden = false;
-  else cookieConsent.hidden = true;
-  const saveCookieConsent = (value) => { localStorage.setItem("cookieConsent", value); cookieConsent.classList.add("hidden"); cookieConsent.hidden = true; };
-  $("#accept-all-cookies").addEventListener("click", () => saveCookieConsent("all"));
-  $("#accept-essential-cookies").addEventListener("click", () => saveCookieConsent("essential"));
-  $("#cookie-settings-btn").addEventListener("click", () => {
-    const panel = $("#cookie-preferences-panel");
-    panel.hidden = !panel.hidden;
-    $("#cookie-settings-btn").setAttribute("aria-expanded", String(!panel.hidden));
-  });
-  $("#save-cookie-preferences").addEventListener("click", () => saveCookieConsent(JSON.stringify({ analytics: $("#analytics-consent").checked, marketing: $("#marketing-consent").checked })));
-  $$("a[data-route]").forEach((link) => link.addEventListener("click", () => history.pushState({}, "", link.getAttribute("href"))));
-  window.addEventListener("popstate", () => { const route = location.hash.slice(1); const link = $(`[data-route="${route}"]`); if (link) routeMenuItem(link); });
   applyUrlRoute();
-  const initialRoute = location.hash.slice(1);
-  const initialRouteLink = $(`#tools-panel [data-route="${initialRoute}"]`);
-  if (initialRouteLink) routeMenuItem(initialRouteLink);
 })();
