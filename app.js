@@ -83,8 +83,8 @@
   const size = (value) => value < 1024 ? `${value} B` : value < 1048576 ? `${(value / 1024).toFixed(1)} KB` : `${(value / 1048576).toFixed(1)} MB`;
   const setProgress = (value, message) => { $("#progress-bar").style.width = `${value}%`; $("#progress-value").textContent = `${value}%`; $("#progress-message").textContent = message; };
   const showToast = (message) => { const toast = $("#toast"); toast.textContent = message; toast.hidden = false; clearTimeout(showToast.timer); showToast.timer = setTimeout(() => { toast.hidden = true; }, 4200); };
-  const validationWorker = new Worker(URL.createObjectURL(new Blob([`onmessage=async({data})=>{const b=new Uint8Array(data.buffer),e=data.extension;const ascii=new TextDecoder().decode(b.slice(0,512)).trimStart().toLowerCase();let ok=false;if(e==="pdf")ok=ascii.startsWith("%pdf-");else if(e==="docx")ok=b[0]===80&&b[1]===75;else if(["jpg","jpeg"].includes(e))ok=b[0]===255&&b[1]===216&&b[2]===255;else if(e==="png")ok=b[0]===137&&b[1]===80&&b[2]===78&&b[3]===71;else if(e==="gif")ok=ascii.startsWith("gif8");else if(e==="webp")ok=ascii.startsWith("riff")&&ascii.slice(8,12)==="webp";else if(e==="bmp")ok=b[0]===66&&b[1]===77;else if(["tif","tiff"].includes(e))ok=(b[0]===73&&b[1]===73&&b[2]===42)||(b[0]===77&&b[1]===77&&b[3]===42);else if(e==="ico")ok=b[0]===0&&b[1]===0&&b[2]===1&&b[3]===0;else if(["heic","avif"].includes(e))ok=ascii.includes("ftyp")&&/(heic|heix|hevc|avif|avis)/.test(ascii);else if(e==="wav")ok=ascii.startsWith("riff")&&ascii.slice(8,12)==="wave";else if(e==="webm")ok=b[0]===26&&b[1]===69&&b[2]===223&&b[3]===163;else if(e==="ogg")ok=ascii.startsWith("oggs");else if(e==="mp3")ok=ascii.startsWith("id3")||(b[0]===255&&(b[1]&224)===224);else if(e==="aac")ok=(b[0]===255&&(b[1]&246)===240);else if(e==="m4a")ok=ascii.includes("ftyp")&&/(m4a|mp4)/.test(ascii);else if(e==="flac")ok=ascii.startsWith("flac");else if(e==="svg")ok=ascii.includes("<svg")&&!/<script|on[a-z]+\\s*=|javascript:/i.test(ascii);else if(e==="txt")ok=!b.includes(0);postMessage(ok)}`], { type: "application/javascript" })));
-  const validateFile = async (candidate) => new Promise((resolve) => { const worker = validationWorker; const done = (event) => { worker.removeEventListener("message", done); resolve(event.data === true); }; worker.addEventListener("message", done); candidate.slice(0, 4096).arrayBuffer().then((buffer) => worker.postMessage({ extension: ext(candidate.name), buffer }, [buffer])); });
+  const validationWorker = new Worker(URL.createObjectURL(new Blob([`onmessage=async({data})=>{const b=new Uint8Array(data.buffer),e=data.extension;const ascii=new TextDecoder().decode(b.slice(0,512)).trimStart().toLowerCase();let ok=false;if(e==="pdf")ok=ascii.startsWith("%pdf-");else if(e==="docx")ok=b[0]===80&&b[1]===75;else if(["jpg","jpeg"].includes(e))ok=b[0]===255&&b[1]===216&&b[2]===255;else if(e==="png")ok=b[0]===137&&b[1]===80&&b[2]===78&&b[3]===71;else if(e==="gif")ok=ascii.startsWith("gif8");else if(e==="webp")ok=ascii.startsWith("riff")&&ascii.slice(8,12)==="webp";else if(e==="bmp")ok=b[0]===66&&b[1]===77;else if(["tif","tiff"].includes(e))ok=(b[0]===73&&b[1]===73&&b[2]===42)||(b[0]===77&&b[1]===77&&b[3]===42);else if(e==="ico")ok=b[0]===0&&b[1]===0&&b[2]===1&&b[3]===0;else if(["heic","avif"].includes(e))ok=ascii.includes("ftyp")&&/(heic|heix|hevc|avif|avis)/.test(ascii);else if(e==="wav")ok=ascii.startsWith("riff")&&ascii.slice(8,12)==="wave";else if(e==="mp4"){const view=new DataView(b.buffer,b.byteOffset,b.byteLength),shortSize=b.length>=4?view.getUint32(0):0,extended=shortSize===1,boxSize=extended&&b.length>=16?Number(view.getBigUint64(8)):shortSize,brandStart=extended?16:8,minSize=extended?24:16,brandLimit=Math.min(boxSize,b.length);const supported=["isom","iso2","iso3","iso4","iso5","iso6","mp41","mp42","avc1","m4v ","msnv","dash","3gp4","3gp5","3g2a"];let brandMatch=supported.includes(ascii.slice(brandStart,brandStart+4));for(let i=brandStart+8;i+4<=brandLimit&&!brandMatch;i+=4)brandMatch=supported.includes(ascii.slice(i,i+4));ok=b.length>=minSize&&ascii.slice(4,8)==="ftyp"&&boxSize>=minSize&&boxSize<=data.size&&(boxSize-minSize)%4===0&&brandMatch}else if(e==="webm")ok=b[0]===26&&b[1]===69&&b[2]===223&&b[3]===163;else if(e==="ogg")ok=ascii.startsWith("oggs");else if(e==="mp3")ok=ascii.startsWith("id3")||(b[0]===255&&(b[1]&224)===224);else if(e==="aac")ok=(b[0]===255&&(b[1]&246)===240);else if(e==="m4a")ok=ascii.includes("ftyp")&&/(m4a|mp4)/.test(ascii);else if(e==="flac")ok=ascii.startsWith("flac");else if(e==="svg")ok=ascii.includes("<svg")&&!/<script|on[a-z]+\\s*=|javascript:/i.test(ascii);else if(e==="txt")ok=!b.includes(0);postMessage(ok)}`], { type: "application/javascript" })));
+  const validateFile = async (candidate) => new Promise((resolve) => { const worker = validationWorker; const done = (event) => { worker.removeEventListener("message", done); resolve(event.data === true); }; worker.addEventListener("message", done); candidate.slice(0, 4096).arrayBuffer().then((buffer) => worker.postMessage({ extension: ext(candidate.name), size: candidate.size, buffer }, [buffer])); });
   const showStep = (step) => { ["upload","convert","result"].forEach((name) => { const view = $(`#step-${name}`); const active = name === step; view.hidden = !active; view.classList.toggle("active", active); }); $$(".step-indicator span").forEach((node, index) => node.classList.toggle("active", index === ["upload","convert","result"].indexOf(step))); };
   function populateFormats() {
     const commonTargets = files
@@ -182,7 +182,7 @@
     }
     const valid = [];
     for (const candidate of selected) if (await validateFile(candidate)) valid.push(candidate);
-    if (!valid.length) { showToast("The selected file could not be validated."); return; }
+    if (!valid.length) { showToast("The file signature does not match its extension. Choose a valid, uncorrupted file."); return; }
     const commonTargets = valid
       .map((candidate) => new Set(routesForFile(candidate).map(({ to }) => to)))
       .reduce((common, targets) => new Set([...common].filter((target) => targets.has(target))));
@@ -259,40 +259,90 @@
     page.drawImage(embedded, { x: 0, y: 0, width: embedded.width, height: embedded.height });
     return new Blob([await pdf.save()], { type: "application/pdf" });
   }
-  async function pdfImageBlob(target) {
+  async function pdfImageBlobs(target) {
     await ensurePdfJs();
-    const pdfDocument = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-    const page = await pdfDocument.getPage(1);
-    const viewport = page.getViewport({ scale: 2 });
-    const canvas = window.document.createElement("canvas");
-    canvas.width = Math.ceil(viewport.width);
-    canvas.height = Math.ceil(viewport.height);
-    await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
-    const mime = target === "jpg" ? "image/jpeg" : `image/${target}`;
-    return canvasBlob(canvas, mime, Number($("#quality-range").value) / 100);
+    let pdfDocument;
+    try {
+      pdfDocument = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+      const lastPage = $("#page-range").value === "first" ? 1 : pdfDocument.numPages;
+      const pages = [];
+      const mime = target === "jpg" ? "image/jpeg" : `image/${target}`;
+      for (let pageNumber = 1; pageNumber <= lastPage; pageNumber += 1) {
+        setProgress(48 + Math.round(pageNumber / lastPage * 35), `Rendering PDF page ${pageNumber} of ${lastPage}...`);
+        const page = await pdfDocument.getPage(pageNumber);
+        const baseViewport = page.getViewport({ scale: 1 });
+        const scale = Math.min(2, Math.sqrt(16_000_000 / (baseViewport.width * baseViewport.height)), 16384 / baseViewport.width, 16384 / baseViewport.height);
+        const viewport = page.getViewport({ scale });
+        const canvas = window.document.createElement("canvas");
+        canvas.width = Math.ceil(viewport.width);
+        canvas.height = Math.ceil(viewport.height);
+        try {
+          const canvasContext = canvas.getContext("2d");
+          if (!canvasContext) throw new Error("A canvas could not be created for this PDF page.");
+          const renderTask = page.render({ canvasContext, viewport });
+          let timeoutId;
+          try {
+            await Promise.race([
+              renderTask.promise,
+              new Promise((_, reject) => {
+                timeoutId = window.setTimeout(() => {
+                  renderTask.cancel();
+                  reject(new Error(`Rendering PDF page ${pageNumber} timed out. Try a smaller PDF.`));
+                }, 30000);
+              })
+            ]);
+          } finally {
+            window.clearTimeout(timeoutId);
+          }
+          pages.push({ blob: await canvasBlob(canvas, mime, Number($("#quality-range").value) / 100), pageNumber });
+        } finally {
+          canvas.width = 0;
+          canvas.height = 0;
+          page.cleanup();
+        }
+      }
+      return pages;
+    } finally {
+      if (pdfDocument) await pdfDocument.destroy();
+    }
   }
   async function pdfTextBlob() {
     await ensurePdfJs();
-    const pdfDocument = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-    const lastPage = $("#page-range").value === "first" ? 1 : pdfDocument.numPages;
-    const pages = [];
-    for (let pageNumber = 1; pageNumber <= lastPage; pageNumber += 1) {
-      const page = await pdfDocument.getPage(pageNumber);
-      const content = await page.getTextContent();
-      pages.push(content.items.map((item) => item.str).join(" "));
+    let pdfDocument;
+    try {
+      pdfDocument = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+      const lastPage = $("#page-range").value === "first" ? 1 : pdfDocument.numPages;
+      const pages = [];
+      for (let pageNumber = 1; pageNumber <= lastPage; pageNumber += 1) {
+        const page = await pdfDocument.getPage(pageNumber);
+        try {
+          const content = await page.getTextContent();
+          pages.push(content.items.map((item) => item.str).join(" "));
+        } finally {
+          page.cleanup();
+        }
+      }
+      return new Blob([pages.join("\n\n")], { type: "text/plain" });
+    } finally {
+      if (pdfDocument) await pdfDocument.destroy();
     }
-    return new Blob([pages.join("\n\n")], { type: "text/plain" });
   }
   let ffmpegInstance = null;
   async function transcodeMedia(target) {
-    if (!window.FFmpegWASM) await loadScript("https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js");
+    if (!window.FFmpegWASM) await loadScript("/vendor/ffmpeg/ffmpeg.js");
     if (!window.FFmpegUtil) await loadScript("https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js");
     if (!window.FFmpegWASM || !window.FFmpegUtil) throw new Error("Media conversion is unavailable in this browser.");
     if (!ffmpegInstance) {
-      ffmpegInstance = new window.FFmpegWASM.FFmpeg();
-      ffmpegInstance.on("progress", ({ progress }) => setProgress(20 + Math.round(progress * 65), "Transcoding media in your browser..."));
+      const instance = new window.FFmpegWASM.FFmpeg();
+      instance.on("progress", ({ progress }) => setProgress(20 + Math.round(progress * 65), "Transcoding media in your browser..."));
       const core = "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd";
-      await ffmpegInstance.load({ coreURL: `${core}/ffmpeg-core.js`, wasmURL: `${core}/ffmpeg-core.wasm` });
+      try {
+        await instance.load({ coreURL: `${core}/ffmpeg-core.js`, wasmURL: `${core}/ffmpeg-core.wasm` });
+      } catch (error) {
+        instance.terminate();
+        throw error;
+      }
+      ffmpegInstance = instance;
     }
     const inputName = `input.${ext(file.name)}`;
     const outputNameForTarget = `output.${target}`;
@@ -322,7 +372,17 @@
         if (sourceGroup === "image") {
           blob = target === "pdf" ? await pdfBlob() : await imageBlob(target);
         } else if (sourceGroup === "document" && ext(file.name) === "pdf") {
-          blob = target === "txt" ? await pdfTextBlob() : await pdfImageBlob(target);
+          if (target === "txt") {
+            blob = await pdfTextBlob();
+          } else {
+            const pageImages = await pdfImageBlobs(target);
+            const baseName = file.name.replace(/\.[^.]+$/, "");
+            outputs.push(...pageImages.map(({ blob: pageBlob, pageNumber }) => ({
+              blob: pageBlob,
+              name: `${baseName}${pageImages.length > 1 ? `-page-${pageNumber}` : ""}.${target}`
+            })));
+            continue;
+          }
         } else if (sourceGroup === "audio" || sourceGroup === "video") {
           blob = await mediaBlob(target);
         } else {

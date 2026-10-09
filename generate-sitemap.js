@@ -22,7 +22,7 @@ const conversionDescription = (route) => {
   if (route.category === "Document") {
     return route.to === "txt"
       ? "Extract selectable text from every page of a PDF into a plain text file."
-      : `Export the first page of a PDF as a ${to} image.`;
+      : `Convert every PDF page to a separate ${to} image, or choose the first page only.`;
   }
   if (route.category === "Audio") return `Transcode ${from} audio to ${to} in your browser.`;
   if (route.category === "Video") return `Extract the audio track from ${from} and save it as ${to}.`;

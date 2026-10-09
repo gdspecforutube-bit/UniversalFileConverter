@@ -47,7 +47,7 @@
           {"@type":"Question","name":"Are my files uploaded?","acceptedAnswer":{"@type":"Answer","text":"File contents are processed in your browser and are not uploaded to Convertivo. Some conversion libraries are downloaded from their CDNs when needed."}},
           {"@type":"Question","name":"Which file formats are supported?","acceptedAnswer":{"@type":"Answer","text":"Image sources include JPG, PNG, WEBP, HEIC, AVIF, SVG, BMP, GIF and ICO. PDF files can be converted to JPG, PNG, WEBP or TXT. Audio sources include MP3, WAV, AAC, OGG, M4A and FLAC; MP4 and WEBM video can be converted to MP3 or WAV."}},
           {"@type":"Question","name":"Is there a file size limit?","acceptedAnswer":{"@type":"Answer","text":"Files are processed in your browser, so the practical limit depends on your device memory and browser."}},
-          {"@type":"Question","name":"Which pages of a PDF are converted to an image?","acceptedAnswer":{"@type":"Answer","text":"PDF-to-image conversion exports the first page. PDF-to-text conversion can extract text from all pages."}}
+          {"@type":"Question","name":"Which pages of a PDF are converted to an image?","acceptedAnswer":{"@type":"Answer","text":"Multi-page PDFs are exported as separate images in a ZIP by default; selecting first page only downloads one image. PDF-to-text conversion can extract text from all pages."}}
         ]
       }
     ]
@@ -100,7 +100,7 @@
           <label>Image quality <output id="quality-value">92%</output><input id="quality-range" type="range" min="10" max="100" value="92"></label>
           <label>Resize width<input id="resize-width" type="number" min="1" placeholder="Original"></label>
           <label>Resize height<input id="resize-height" type="number" min="1" placeholder="Original"></label>
-          <label>Text extraction pages (PDF to TXT)<select id="page-range"><option value="all">All pages</option><option value="first">First page only</option></select></label>
+          <label>PDF pages to convert<select id="page-range"><option value="all">All pages</option><option value="first">First page only</option></select></label>
         </div></details>
         <button id="convert-btn" class="primary-btn" type="button" aria-label="Convert the selected file">Convert File Now</button>
       </section>
@@ -145,7 +145,7 @@
       <details><summary>Are my files uploaded?</summary><p>File contents are processed in your browser and are not uploaded to Convertivo. Some conversion libraries are downloaded from their CDNs when needed.</p></details>
       <details><summary>Which formats can I convert?</summary><p>Supported image files include JPG, PNG, WEBP, HEIC, AVIF, SVG, BMP, GIF and ICO. PDFs can be converted to JPG, PNG, WEBP or TXT. Audio files can be converted to MP3 or WAV, and MP4 or WEBM video can be converted to MP3 or WAV. Available outputs depend on the source format.</p></details>
       <details><summary>Is there a file size limit?</summary><p>Files are processed in your browser. The practical limit depends on your device memory and browser.</p></details>
-      <details><summary>Which PDF pages are converted to an image?</summary><p>PDF-to-image conversion exports the first page. PDF-to-text conversion can extract text from all pages.</p></details>
+      <details><summary>Which PDF pages are converted to an image?</summary><p>Multi-page PDFs are exported as separate images in a ZIP by default; selecting first page only downloads one image. PDF-to-text conversion can extract text from all pages.</p></details>
     </section>
     <footer class="site-footer">
       <a class="footer-brand" href="/" aria-label="Convertivo home">Convertivo</a>
